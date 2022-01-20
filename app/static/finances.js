@@ -378,6 +378,17 @@ var finances = {
             account: "Capital One Checkings"
         }),
         new MoneyMove({
+            name: "Klarna",
+            type: "expense",
+            amount: 89.00,
+            basedOnDate: true,
+            startFrom: null,
+            endFrom: null,
+            frequency: null,
+            date: 26,
+            account: "Capital One Checkings"
+        }),
+        new MoneyMove({
             name: "Capital One Platinum Payment",
             type: "expense",
             amount: 35.00,
