@@ -1,0 +1,190 @@
+/* variables & reset */
+:root {
+    --calendar-height: 900px;
+
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Helvetica, Arial;
+    list-style: none;
+}
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#calendar {
+    width: calc(var(--calendar-height) * 1.122222222222222222222222222);
+    position: relative;
+    display: inline-block;
+    height: var(--calendar-height);
+}
+#calendar > .calendar-row {
+    height: calc(calc(100% - 35px) / 7);
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+}
+#calendar > .calendar-row:nth-child(2) {
+    background-color: rgb(92, 92, 92);
+    color: white;
+    font-weight: bold;
+    height: 35px;
+}
+#calendar > .calendar-row:nth-child(2) .day-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: calc(100% / 7);
+    height: 35px;
+    font-size: 18px;
+}
+#calendar > .calendar-row:first-of-type {
+    background-color: rgb(92, 92, 92);
+    justify-content: center;
+    align-items: center;
+}
+#calendar > .calendar-row:first-of-type h2:nth-child(2) {
+    width: 150px;
+}
+#calendar > .calendar-row:first-of-type h2:first-of-type {
+    padding-right: 10px;
+}
+#calendar > .calendar-row:first-of-type h2 {
+    font-weight: bold;
+    color: white;
+    font-size: 24px;
+}
+#calendar > .calendar-row .calendar-square {
+    height: 100%;
+    width: calc(100% / 7);
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+}
+#calendar .calendar-row:nth-child(even) .calendar-square:nth-child(even),
+#calendar .calendar-row:nth-child(odd) .calendar-square:nth-child(odd) {
+    background-color: rgb(74, 134, 173);
+}
+#calendar .calendar-row:nth-child(even) .calendar-square:nth-child(odd),
+#calendar .calendar-row:nth-child(odd) .calendar-square:nth-child(even) {
+    background-color: rgb(61, 118, 156);
+}
+
+#calendar .calendar-row:nth-child(even) .calendar-square:nth-child(even).out-of-current-month,
+#calendar .calendar-row:nth-child(odd) .calendar-square:nth-child(odd).out-of-current-month {
+    background-color: rgb(96, 118, 133);
+}
+#calendar .calendar-row:nth-child(even) .calendar-square:nth-child(odd).out-of-current-month,
+#calendar .calendar-row:nth-child(odd) .calendar-square:nth-child(even).out-of-current-month {
+    background-color: rgb(77, 93, 104);
+}
+
+#prev-month-button {
+    margin-left: 15px;
+}
+#prev-month-button, #next-month-button {
+    padding: 10px;
+    border-radius: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    transition: background-color .25s ease;
+    background-color: rgba(0,0,0,0);
+}
+#prev-month-button:hover, #next-month-button:hover {
+    background-color: rgba(0,0,0,0.5);
+}
+#prev-month-button-design {
+    width: 10px;
+    height: 10px;
+    border-left: 3px solid white;
+    border-bottom: 3px solid white;
+    transform: rotate(45deg);
+    position: relative;
+    left: 1px;
+}
+#next-month-button-design {
+    width: 10px;
+    height: 10px;
+    border-right: 3px solid white;
+    border-bottom: 3px solid white;
+    transform: rotate(-45deg);
+    position: relative;
+    right: 1px;
+}
+
+.date-number {
+    font-weight: bold;
+    padding: 5px;
+    pointer-events: none;
+}
+.date-detail {
+    text-align: center;
+    font-size: 16px;
+    pointer-events: none;
+}
+.loss-number {
+    color: rgb(255, 129, 129);
+}
+.income-number {
+    color: rgb(133, 206, 133);
+}
+.loss-detail {
+    background-color: rgb(255, 129, 129);
+}
+.income-detail {
+    background-color: rgb(133, 206, 133);
+}
+.today > .date-number {
+    background-color: rgb(0, 3, 172);
+}
+.active > .date-number {
+    background-color: orangered;
+}
+
+.square-contents {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: calc(100% - 28px);
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.month-balances-list {
+    margin-bottom: 30px;
+}
+.balances-list { /* list of account balances that shows up in modal */
+    margin-top: 30px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+.details-list { /* list of date details that shows up in modal */
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    font-weight: bold;
+}
+.details-list p { /* each date detail in the details list */
+    padding: 7px;
+    display: inline-block;
+}
+
+#secondary-pane h2 {
+    margin-bottom: 5px;
+}

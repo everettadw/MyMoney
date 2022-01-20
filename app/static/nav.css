@@ -1,0 +1,114 @@
+div#nav-toggle {
+    position: fixed;
+    top: 30px;
+    right: 30px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    z-index: 20;
+}
+
+div#nav-toggle .nav-toggle-design {
+    height: 8px;
+    width: 100%;
+    background-color: rgb(74, 134, 173);
+    position: relative;
+}
+div#nav-toggle #nav-toggle-bar-3 {
+    left: 1px;
+}
+div#nav-toggle #nav-toggle-bar-2 {
+    left: -2px;
+}
+div#nav-toggle #nav-toggle-bar-1,
+div#nav-toggle #nav-toggle-bar-2,
+div#nav-toggle #nav-toggle-bar-3 {
+    transition: all .25s cubic-bezier(0.311, 0.441, 0.444, 1.649), background-color .25s ease;
+    top: 0px;
+    border-radius: 5px;
+    opacity: 1;
+    pointer-events: none;
+    transform: scale(1) rotate(0deg);
+}
+
+div#nav-toggle:hover #nav-toggle-bar-3 {
+    left: -1px;
+    top: -4px;
+}
+div#nav-toggle:hover #nav-toggle-bar-2 {
+    left: 2px;
+}
+div#nav-toggle:hover #nav-toggle-bar-1 {
+    left: -1px;
+    top: 4px;
+}
+
+div#nav-toggle.open #nav-toggle-bar-1,
+div#nav-toggle.open #nav-toggle-bar-2,
+div#nav-toggle.open #nav-toggle-bar-3 {
+    transform-origin: center center;
+    background-color: red;
+}
+
+div#nav-toggle.open #nav-toggle-bar-3 {
+    top: -40%;
+    transform: scale(0.8) rotate(45deg);
+}
+div#nav-toggle.open #nav-toggle-bar-2 {
+    width: 0%;
+    left: 50%;
+    opacity: 0.1;
+}
+div#nav-toggle.open #nav-toggle-bar-1 {
+    top: 40%;
+    transform: scale(0.8) rotate(-45deg);
+}
+
+div#nav-toggle.open:hover #nav-toggle-bar-3 {
+    transform: scale(0.7) rotate(135deg);
+}
+div#nav-toggle.open:hover #nav-toggle-bar-2 {
+    width: 0%;
+}
+div#nav-toggle.open:hover #nav-toggle-bar-1 {
+    transform: scale(0.7) rotate(45deg);
+}
+
+nav {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.9);
+    left: -100%;
+    transition: all .25s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 15;
+}
+
+div#nav-toggle.open + nav {
+    left: 0%;
+}
+
+nav a {
+    text-decoration: none;
+    color: rgb(74, 134, 173);
+    padding: 10px;
+    opacity: 0.7;
+    transform: scale(0.8) rotate(0deg);
+    transition: all .25s cubic-bezier(0.311, 0.441, 0.444, 1.649);
+    text-shadow: 3px 3px 6px black;
+    font-size: 48px;
+    letter-spacing: 2px;
+}
+nav a:hover {
+    transform: scale(1) rotate(5deg);
+    opacity: 1;
+}

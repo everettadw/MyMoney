@@ -1,0 +1,13 @@
+<div id="nav-container">
+    <div id="nav-toggle">
+        <span class="nav-toggle-design" id="nav-toggle-bar-1"></span>
+        <span class="nav-toggle-design" id="nav-toggle-bar-2"></span>
+        <span class="nav-toggle-design" id="nav-toggle-bar-3"></span>
+    </div>  
+    <nav>
+        <a href="{{ url_for('settings') }}">Settings</a>
+        <a href="{{ url_for('home') }}">Home</a>
+    </nav>
+</div>
+<script type="text/javascript" src="{{ url_for('static', filename='utils.js') }}"></script>
+<script type="text/javascript" src="{{ url_for('static', filename='nav.js') }}"></script>

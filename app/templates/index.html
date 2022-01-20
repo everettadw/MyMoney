@@ -1,0 +1,89 @@
+{% extends 'template.html' %}
+{% block content %}
+    {% include 'nav.html' %}
+    <div id="calendar">
+        <div class="calendar-row">
+            <h2>2021</h2>
+            <h2>December</h2>
+
+            <div id="prev-month-button">
+                <div id="prev-month-button-design"></div>
+            </div>
+            <div id="next-month-button">
+                <div id="next-month-button-design"></div>
+            </div>
+        </div>
+        <div class="calendar-row">
+            <div class="day-label">Sunday</div>
+            <div class="day-label">Monday</div>
+            <div class="day-label">Tuesday</div>
+            <div class="day-label">Wednesday</div>
+            <div class="day-label">Thursday</div>
+            <div class="day-label">Friday</div>
+            <div class="day-label">Saturday</div>
+        </div>
+        <div class="calendar-row">
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+        </div>
+        <div class="calendar-row">
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+        </div>
+        <div class="calendar-row">
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+        </div>
+        <div class="calendar-row">
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+        </div>
+        <div class="calendar-row">
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+        </div>
+        <div class="calendar-row">
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+            <div class="calendar-square" data-day="" data-month="" data-year=""></div>
+        </div>
+    </div>
+    <div id="secondary-pane"></div>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='utils.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='dateLib.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='ledger.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='calendar.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='modal.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='finances.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+{% endblock %}
