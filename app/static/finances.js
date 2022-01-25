@@ -227,7 +227,7 @@ var finances = {
         "Capital One Checkings": new Account(
             "Capital One Checkings",
             "debit",
-            2083.0+110-1155
+            1359.99 - 55 - 40
         ),
         "Capital One Platinum": new Account(
             "Capital One Platinum",
@@ -302,7 +302,7 @@ var finances = {
         new MoneyMove({
             name: "Discover Credit Payment",
             type: "expense",
-            amount: 35.00,
+            amount: 51.00,
             basedOnDate: true,
             startFrom: null,
             endFrom: null,
@@ -325,7 +325,7 @@ var finances = {
         new MoneyMove({
             name: "Car Insurance",
             type: "expense",
-            amount: 291.70,
+            amount: 249.55,
             basedOnDate: true,
             startFrom: null,
             endFrom: null,
@@ -336,7 +336,7 @@ var finances = {
         new MoneyMove({
             name: "Food",
             type: "expense",
-            amount: 65.00,
+            amount: 40.00,
             basedOnDate: false,
             startFrom: new Date(2022, 0, 3),
             endFrom: null,
