@@ -1,5 +1,5 @@
-from flask import render_template
-from . import app
+from flask import jsonify, render_template
+from . import User, app
 
 @app.route("/")
 def home():
@@ -8,3 +8,7 @@ def home():
 @app.route("/settings")
 def settings():
     return render_template("settings.html")
+
+@app.route("/user/<username>")
+def get_user(username):
+    return User.query.filter_by(username=username).first().email
