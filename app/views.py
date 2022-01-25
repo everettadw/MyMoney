@@ -9,6 +9,7 @@ def home():
 def settings():
     return render_template("settings.html")
 
-@app.route("/user/<username>")
+@app.route("/user/<username>", methods=['GET'])
 def get_user(username):
-    return User.query.filter_by(username=username).first().email
+    user_ex = User.query.filter_by(username=username).first()
+    return jsonify({"username":user_ex.username, "email": user_ex.email})
