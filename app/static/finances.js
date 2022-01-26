@@ -479,17 +479,17 @@ var finances = {
             frequency: 14,
             amount: 630.00
         }),
-        new MoneyMove({
-            name: "Helium Miner",
-            incomeType: "exact",
-            type: "income",
-            basedOnDate: false,
-            date: null,
-            account: "Capital One Checkings",
-            startFrom: new Date(2022, 0, 7),
-            endFrom: null,
-            frequency: 14,
-            amount: 120.00
-        })
+        // new MoneyMove({
+        //     name: "Helium Miner",
+        //     incomeType: "exact",
+        //     type: "income",
+        //     basedOnDate: false,
+        //     date: null,
+        //     account: "Capital One Checkings",
+        //     startFrom: new Date(2022, 0, 7),
+        //     endFrom: null,
+        //     frequency: 14,
+        //     amount: 120.00
+        // })
     ]
 };

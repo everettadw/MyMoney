@@ -1,3 +1,13 @@
+function tryMe(username, email) {
+    fetch('/new/user', {method: 'POST', body: JSON.stringify({"username": username, "email": email}), headers: {"Content-Type": "application/json"}})
+    .then(response => {
+        return response.json();
+    })
+    .then(json => {
+        console.log(json);
+    })
+}
+
 window.onload = () => {
 
     // Grabbing all elements necessary for calendar operation
