@@ -10,7 +10,22 @@ def home():
 def settings():
     return render_template("settings.html")
 
-@app.route("/user/<username>", methods=['GET'])
+@app.route("/users", methods=['GET'])
+def get_users():
+    users = User.query.all()
+    if users == None:
+        return jsonify({
+            "Error": "No users exist."
+        })
+    return_json = []
+    for user in users:
+        return_json.append({
+            'username': user.username,
+            'email': user.email
+        })
+    return jsonify(return_json)    
+
+@app.route("/users/<username>", methods=['GET'])
 def get_user(username):
     user_ex = User.query.filter_by(username=username).first()
     if user_ex == None:
@@ -22,7 +37,7 @@ def get_user(username):
         "email": user_ex.email
     })
 
-@app.route("/new/user", methods=['POST'])
+@app.route("/users/new", methods=['POST'])
 def create_user():
     request_body = request.get_json()
     if ('username' not in request_body) or ('email' not in request_body):
@@ -32,11 +47,18 @@ def create_user():
     new_user = User(username=request_body['username'], email=request_body['email'])
     db.session.add(new_user)
     db.session.commit()
-    return jsonify(request.get_json())
+    return jsonify({
+        "Success": "User '" + request_body['username'] + "' created."
+    })
 
-@app.route("/delete/user/<username>")
-def delete_user(username):
-    user_to_delete = User.query.filter_by(username=username).first()
+@app.route("/users/delete", methods=['POST'])
+def delete_user():
+    proper_request = request.get_json()
+    if proper_request == None:
+        return jsonify({
+            "Error": "This endpoint will only accept content-types of application/json."
+        })
+    user_to_delete = User.query.filter_by(username=proper_request['username']).first()
     if user_to_delete == None:
         return jsonify({
             "Error": "User does not exist."
@@ -44,5 +66,5 @@ def delete_user(username):
     db.session.delete(user_to_delete)
     db.session.commit()
     return jsonify({
-        "Success": "User '" + username + "' has been deleted."
+        "Success": "User '" + proper_request['username'] + "' has been deleted."
     })

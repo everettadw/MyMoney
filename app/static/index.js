@@ -1,8 +1,19 @@
-function tryMe(username, email) {
-    fetch('/new/user', {method: 'POST', body: JSON.stringify({"username": username, "email": email}), headers: {"Content-Type": "application/json"}})
+async function postTo(url, data) {
+    return await fetch(url, {method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'}})
     .then(response => {
         return response.json();
-    })
+    });
+}
+
+function addUser(username, email) {
+    postTo('/users/new', {'username': username, 'email': email})
+    .then(json => {
+        console.log(json);
+    });
+}
+
+function deleteUser(username) {
+    postTo('/users/delete', {'username': username})
     .then(json => {
         console.log(json);
     })
