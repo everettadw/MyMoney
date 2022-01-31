@@ -1,5 +1,6 @@
+from datetime import date
 from flask import jsonify, render_template, request
-from .models import User
+from .models import MoneySource, User
 from . import app, db
 
 @app.route("/")
@@ -19,10 +20,7 @@ def get_users():
         })
     return_json = []
     for user in users:
-        return_json.append({
-            'username': user.username,
-            'email': user.email
-        })
+        return_json.append(user.json())
     return jsonify(return_json)    
 
 @app.route("/users/<username>", methods=['GET'])
@@ -68,3 +66,30 @@ def delete_user():
     return jsonify({
         "Success": "User '" + proper_request['username'] + "' has been deleted."
     })
+
+@app.route("/moneysources", methods=['GET'])
+def get_money_sources():
+    money_sources = MoneySource.query.all()
+    if money_sources == None:
+        return jsonify({
+            "Error": "There are no money sources."
+        })
+    return_json = []
+    for money_source in money_sources:
+        return_json.append(money_source.json())
+    return jsonify(return_json)
+
+@app.route("/moneysources/new", methods=['POST', 'GET'])
+def create_money_source():
+    proper_request = request.get_json()
+    test_source = MoneySource.create(
+        returnObj=True,
+        name='Rent',
+        type='Expense',
+        user_id=1,
+        date='00012022',
+        account="Capital One Checkings",
+        basedOnDate=True,
+        amount=1100
+    )
+    return jsonify(test_source.json())
