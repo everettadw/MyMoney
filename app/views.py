@@ -1,7 +1,14 @@
 from datetime import date
-from flask import jsonify, render_template, request
+from flask import jsonify, redirect, render_template, request, url_for
 from .models import MoneySource, User
 from . import app, db
+
+@app.route("/resetdb")
+def reset_db():
+    db.drop_all()
+    db.create_all()
+    User.create(username="admin", email="business.eadw@gmail.com")
+    return redirect(url_for('create_money_source'))
 
 @app.route("/")
 def home():
@@ -30,10 +37,11 @@ def get_user(username):
         return jsonify({
             "Error": "User does not exist."
         })
-    return jsonify({
-        "username":user_ex.username,
-        "email": user_ex.email
-    })
+    return_json = []
+    return_json.append(user_ex.json())
+    for money_source in user_ex.money_sources:
+        return_json.append(money_source.json())
+    return jsonify(return_json)
 
 @app.route("/users/new", methods=['POST'])
 def create_user():
@@ -83,13 +91,13 @@ def get_money_sources():
 def create_money_source():
     proper_request = request.get_json()
     test_source = MoneySource.create(
-        returnObj=True,
+        return_obj=True,
         name='Rent',
         type='Expense',
         user_id=1,
         date='00012022',
         account="Capital One Checkings",
-        basedOnDate=True,
+        based_on_date=True,
         amount=1100
     )
     return jsonify(test_source.json())
