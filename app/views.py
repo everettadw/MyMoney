@@ -1,5 +1,5 @@
-from datetime import date
-from flask_login import current_user, login_required, logout_user
+import base64
+from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import jsonify, redirect, render_template, request, url_for
 from .models import MoneySource, User
@@ -7,7 +7,7 @@ from . import app, db, login_manager
 
 @login_manager.user_loader # User loader
 def load_user(user_id):
-    return User.get(user_id)
+    return User.query.filter_by(id=user_id).first()
 
 @login_manager.request_loader # Request User loader
 def load_user_from_request(request):
@@ -40,6 +40,7 @@ def reset_db():
     db.drop_all()
     db.create_all()
     User.create(username="admin", email="business.eadw@gmail.com", password=generate_password_hash("Ai12eqfav%"))
+    User.create(username="guest", email="guest@gmail.com", password=generate_password_hash("testing"))
     return redirect(url_for('logout'))
 
 @app.route("/login", methods=['GET', 'POST'])
@@ -48,7 +49,15 @@ def login():
         return redirect(url_for('home'))
 
     if request.method == 'POST':
-        print(request.get_json()['testing'])
+        user = User.query.filter_by(username=request.get_json()['username']).first()
+        if user and check_password_hash(user.password, request.get_json()['password']):
+            login_user(user, remember=True)
+            return jsonify({
+                "Status": "SUCCESS"
+            })
+        return jsonify({
+            "Status": "FAILURE"
+        })
 
     return render_template('login.html')
 
@@ -76,7 +85,9 @@ def get_users():
         })
     return_json = []
     for user in users:
-        return_json.append(user.json())
+        user_json = user.json()
+        user_json['MoneySources'] = len(user.money_sources)
+        return_json.append(user_json)
     return jsonify(return_json)    
 
 @app.route("/users/<username>", methods=['GET'])
@@ -88,8 +99,7 @@ def get_user(username):
         })
     return_json = []
     return_json.append(user_ex.json())
-    for money_source in user_ex.money_sources:
-        return_json.append(money_source.json())
+    return_json[0]['MoneySources'] = [money_source.json() for money_source in user_ex.money_sources]
     return jsonify(return_json)
 
 @app.route("/users/new", methods=['POST'])
@@ -137,13 +147,14 @@ def get_money_sources():
     return jsonify(return_json)
 
 @app.route("/moneysources/new", methods=['POST', 'GET'])
+@login_required
 def create_money_source():
     proper_request = request.get_json()
     test_source = MoneySource.create(
         return_obj=True,
         name='Rent',
         type='Expense',
-        user_id=1,
+        user_id=current_user.id,
         date='00012022',
         account="Capital One Checkings",
         based_on_date=True,
