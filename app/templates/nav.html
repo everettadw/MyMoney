@@ -5,8 +5,13 @@
         <span class="nav-toggle-design" id="nav-toggle-bar-3"></span>
     </div>  
     <nav>
-        <a href="{{ url_for('settings') }}">Settings</a>
         <a href="{{ url_for('home') }}">Home</a>
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('settings') }}">Settings</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">Login</a>
+        {% endif %}
     </nav>
 </div>
 <script type="text/javascript" src="{{ url_for('static', filename='utils.js') }}"></script>

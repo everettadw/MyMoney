@@ -10,7 +10,7 @@ document.addEventListener("submit", e => {
     })
     .then(json => {
         if (json['Status'] == "SUCCESS") {
-            window.location = "http://127.0.0.1:5000/users";
+            window.location = "http://127.0.0.1:5000/";
         } else if (json['Status'] == "FAILURE") {
             console.log("Invalid credentials.");
         }

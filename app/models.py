@@ -17,8 +17,14 @@ class BaseMixin(object):
             return_json[attr] = getattr(self, attr)
         return return_json
 
+    def __init__( self, **attr ):
+        for att in attr:
+            setattr(self, att, attr[att])
+
 class User(BaseMixin, UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(50), nullable=False)
+    last_name = db.Column(db.String(50), nullable=False)
     username = db.Column(db.String(80), unique=True, nullable=False)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(255), nullable=False)
@@ -43,9 +49,8 @@ class MoneySource(BaseMixin, db.Model):
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
-    def __init__( self, **attr ):
-        for att in attr:
-            setattr(self, att, attr[att])
+    def __repr__(self):
+        return '<MoneySource %r>' % self.name
 
 class Account(BaseMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -55,5 +60,8 @@ class Account(BaseMixin, db.Model):
     credit_limit = db.Column(db.Integer, nullable=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+
+    def __repr__(self):
+        return '<Account %r>' % self.name
 
 
