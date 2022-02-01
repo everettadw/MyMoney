@@ -1,14 +1,62 @@
 from datetime import date
+from flask_login import current_user, login_required, logout_user
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import jsonify, redirect, render_template, request, url_for
 from .models import MoneySource, User
-from . import app, db
+from . import app, db, login_manager
 
+@login_manager.user_loader # User loader
+def load_user(user_id):
+    return User.get(user_id)
+
+@login_manager.request_loader # Request User loader
+def load_user_from_request(request):
+
+    # first, try to login using the api_key url arg
+    api_key = request.args.get('api_key')
+    if api_key:
+        user = User.query.filter_by(api_key=api_key).first()
+        if user:
+            return user
+
+    # next, try to login using Basic Auth
+    api_key = request.headers.get('Authorization')
+    if api_key:
+        api_key = api_key.replace('Basic ', '', 1)
+        try:
+            api_key = base64.b64decode(api_key)
+        except TypeError:
+            pass
+        user = User.query.filter_by(api_key=api_key).first()
+        if user:
+            return user
+
+    # finally, return None if both methods did not login the user
+    return None
+
+# Drop and recreate all the tables
 @app.route("/resetdb")
 def reset_db():
     db.drop_all()
     db.create_all()
-    User.create(username="admin", email="business.eadw@gmail.com")
-    return redirect(url_for('create_money_source'))
+    User.create(username="admin", email="business.eadw@gmail.com", password=generate_password_hash("Ai12eqfav%"))
+    return redirect(url_for('logout'))
+
+@app.route("/login", methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+
+    if request.method == 'POST':
+        print(request.get_json()['testing'])
+
+    return render_template('login.html')
+
+@app.route("/logout", methods=['GET'])
+@login_required
+def logout():
+    logout_user()
+    return redirect(url_for('login'))
 
 @app.route("/")
 def home():
@@ -19,6 +67,7 @@ def settings():
     return render_template("settings.html")
 
 @app.route("/users", methods=['GET'])
+@login_required
 def get_users():
     users = User.query.all()
     if users == None:

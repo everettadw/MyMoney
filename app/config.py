@@ -1,4 +1,5 @@
 DEBUG = True
+TESTING = False
 SECRET_KEY = "sdfsdflkjslkdfj"
 SQLALCHEMY_DATABASE_URI = "sqlite:///devenv"
 SQLALCHEMY_TRACK_MODIFICATIONS = False
