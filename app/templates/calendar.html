@@ -1,6 +1,5 @@
 {% extends 'template.html' %}
 {% block content %}
-    {% include 'nav.html' %}
     <div id="calendar">
         <div class="calendar-row">
             <h2>2021</h2>
@@ -78,12 +77,11 @@
         </div>
     </div>
     <div id="secondary-pane"></div>
+{% endblock %}
 
-    <script type="text/javascript" src="{{ url_for('static', filename='utils.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='dateLib.js') }}"></script>
+{% block scripts %}
     <script type="text/javascript" src="{{ url_for('static', filename='ledger.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='calendar.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='modal.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='finances.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
 {% endblock %}

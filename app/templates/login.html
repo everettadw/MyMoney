@@ -1,14 +1,12 @@
 {% extends "template.html" %}
 {% block content %}
-    {% include "nav.html" %}
-
-    <form action="/login" method="POST">
+    <form action="/" method="POST">
         <input type="text" name="username" id="username" placeholder="username" />
         <input type="password" name="password" id="password" placeholder="password" />
         <input type="submit" value="Submit" />
     </form>
+{% endblock %}
 
-    <script type="text/javascript" src={{ url_for('static', filename='utils.js') }}></script>
+{% block scripts %}
     <script type="text/javascript" src={{ url_for('static', filename='login.js') }}></script>
-
 {% endblock %}

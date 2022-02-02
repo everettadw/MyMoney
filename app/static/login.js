@@ -1,7 +1,7 @@
 document.addEventListener("submit", e => {
     e.preventDefault();
 
-    postTo('/login', {
+    postTo('/', {
         "username": el("#username").value,
         "password": el("#password").value
     })
@@ -10,7 +10,7 @@ document.addEventListener("submit", e => {
     })
     .then(json => {
         if (json['Status'] == "SUCCESS") {
-            window.location = "http://127.0.0.1:5000/";
+            window.location = "http://127.0.0.1:5000/calendar";
         } else if (json['Status'] == "FAILURE") {
             console.log("Invalid credentials.");
         }

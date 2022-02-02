@@ -1,7 +1,7 @@
 import base64
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import jsonify, redirect, render_template, request, url_for
+from flask import flash, jsonify, redirect, render_template, request, url_for
 from .models import MoneySource, User
 from . import app, db, login_manager
 
@@ -34,16 +34,23 @@ def load_user_from_request(request):
     # finally, return None if both methods did not login the user
     return None
 
+# Gets rid of the next arg in url when a user
+# tries to access a page without being logged in.
+@login_manager.unauthorized_handler
+def handle_needs_login():
+    flash("Please login to access that page.")
+    return redirect(url_for('login'))
+
 # Drop and recreate all the tables
 @app.route("/resetdb")
 def reset_db():
     db.drop_all()
     db.create_all()
-    User.create(username="admin", email="business.eadw@gmail.com", password=generate_password_hash("Ai12eqfav%"))
-    User.create(username="guest", email="guest@gmail.com", password=generate_password_hash("testing"))
+    User.create(first_name="Everett", last_name="Daniels-Wright", username="admin", email="business.eadw@gmail.com", password=generate_password_hash("Ai12eqfav%"))
+    User.create(first_name="Darren", last_name="Wright", username="guest", email="guest@gmail.com", password=generate_password_hash("testing"))
     return redirect(url_for('logout'))
 
-@app.route("/login", methods=['GET', 'POST'])
+@app.route("/", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
         return redirect(url_for('home'))
@@ -67,11 +74,13 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route("/")
-def home():
-    return render_template("index.html")
+@app.route("/calendar")
+@login_required
+def calendar():
+    return render_template("calendar.html")
 
 @app.route("/settings")
+@login_required
 def settings():
     return render_template("settings.html")
 
@@ -91,6 +100,7 @@ def get_users():
     return jsonify(return_json)    
 
 @app.route("/users/<username>", methods=['GET'])
+@login_required
 def get_user(username):
     user_ex = User.query.filter_by(username=username).first()
     if user_ex == None:
@@ -103,6 +113,7 @@ def get_user(username):
     return jsonify(return_json)
 
 @app.route("/users/new", methods=['POST'])
+@login_required
 def create_user():
     request_body = request.get_json()
     if ('username' not in request_body) or ('email' not in request_body):
@@ -117,6 +128,7 @@ def create_user():
     })
 
 @app.route("/users/delete", methods=['POST'])
+@login_required
 def delete_user():
     proper_request = request.get_json()
     if proper_request == None:
@@ -135,6 +147,7 @@ def delete_user():
     })
 
 @app.route("/moneysources", methods=['GET'])
+@login_required
 def get_money_sources():
     money_sources = MoneySource.query.all()
     if money_sources == None:

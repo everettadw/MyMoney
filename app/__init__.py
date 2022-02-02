@@ -10,6 +10,7 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager(app=app)
 login_manager.login_view = 'login'
+login_manager.login_message = "Please login to access that page."
 
 from .models import User, MoneySource, Account
 from . import views
