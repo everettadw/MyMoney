@@ -49,6 +49,6 @@ function mergeSort(arr) {
     return merge(mergeSort(left), mergeSort(right));
 }
 async function postTo(url, data) {
-  return await fetch(url, {method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'}})
+  return fetch(url, {method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'}});
 }
   

@@ -3,8 +3,8 @@
     <head>
         <title>My Money Calendar</title>
 
-        <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}" />
-        <link rel="stylesheet" href="{{ url_for('static', filename='nav.css') }}" />
+        <link rel="stylesheet" href={{ url_for('static', filename='css/index.css') }} />
+        <link rel="stylesheet" href={{ url_for('static', filename='css/nav.css') }} />
     </head>
     <body>
         {% include "nav.html" %}
@@ -21,13 +21,13 @@
             {% endif %}
         {% endwith %}
 
-        <script type="text/javascript" src="{{ url_for('static', filename='utils.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='dateLib.js') }}"></script>
-        <script type="text/javascript" src="{{ url_for('static', filename='modal.js') }}"></script>
-        <script type="text/javascript" src="{{url_for('static', filename='messsages.js')}}"></script>
+        <script type="text/javascript" src={{ url_for('static', filename='js/utils.js') }}></script>
+        <script type="text/javascript" src={{ url_for('static', filename='js/dateLib.js') }}></script>
+        <script type="text/javascript" src={{ url_for('static', filename='js/modal.js') }}></script>
+        <script type="text/javascript" src={{ url_for('static', filename='js/messages.js' )}}></script>
 
         {% if current_user.is_authenticated %}
-            <script type="text/javascript" src="{{ url_for('static', filename='nav.js') }}"></script>
+            <script type="text/javascript" src={{ url_for('static', filename='js/nav.js') }}></script>
         {% endif %}
 
         {% block scripts %}{% endblock %}

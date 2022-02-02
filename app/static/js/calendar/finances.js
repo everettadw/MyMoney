@@ -37,16 +37,16 @@ class MoneyMove {
     constructor(instanceDetails) {
         this.name = instanceDetails.name;
         this.type = instanceDetails.type;
-        this.freq = instanceDetails.frequency;
+        this.frequency = instanceDetails.frequency;
         this.date = instanceDetails.date;
-        this.end = instanceDetails.endFrom;
-        this.start = instanceDetails.startFrom;
+        this.end_from = instanceDetails.endFrom;
+        this.start_from = instanceDetails.startFrom;
         this.account = instanceDetails.account;
-        this.basedOnDate = instanceDetails.basedOnDate;
+        this.based_on_date = instanceDetails.basedOnDate;
 
         if ( this.type == "expense" ) {
             this.amount = instanceDetails.amount;
-            this.appliedTo = instanceDetails.appliedTo;
+            this.applied_to = instanceDetails.appliedTo;
         } else if ( this.type == "income" ) { 
             if ( instanceDetails.incomeType == "hourly" ) {
                 this.amount = MoneyMove.calculateHourlyPaycheck(instanceDetails.wage,
@@ -68,7 +68,7 @@ class MoneyMove {
 
         let dateList = [];
 
-        if ( this.basedOnDate ) {
+        if ( this.based_on_date ) {
             let months = monthsBetween(startCalculationsFromDate, endCalculationsFromDate);
             let moneyMoveDate = null;
 
@@ -81,11 +81,11 @@ class MoneyMove {
                     moneyMoveDate = new Date(walkingDate.getFullYear(), walkingDate.getMonth(), this.date);
                 }
 
-                if ( this.start != null && moneyMoveDate < this.start ) {
+                if ( this.start_from != null && moneyMoveDate < decodeDateTag(this.start_from) ) {
                     walkingDate.setMonth(walkingDate.getMonth() + 1, 1);
                     continue;
                 }
-                if ( this.end != null && moneyMoveDate > this.end ) {
+                if ( this.end_from != null && moneyMoveDate > decodeDateTag(this.end_from) ) {
                     walkingDate.setMonth(walkingDate.getMonth() + 1, 1);
                     continue;
                 }
@@ -112,7 +112,7 @@ class MoneyMove {
                     dateDetails.details.push({
                         name: this.name,
                         amount: dateDetailsAmount,
-                        appliedTo: this.appliedTo,
+                        appliedTo: this.applied_to,
                         account: this.account,
                         type: 'loss'
                     });
@@ -121,18 +121,19 @@ class MoneyMove {
                 walkingDate.setMonth(walkingDate.getMonth() + 1, 1);
             }
         } else {
-            if ( walkingDate <= this.start && this.start < endCalculationsFromDate ) {
-                walkingDate = new Date(this.start.getFullYear(), this.start.getMonth(), this.start.getDate());
-            } else if ( walkingDate > this.start && walkingDate < endCalculationsFromDate ) {
-                let calibrate = new Date(this.start.getFullYear(), this.start.getMonth(), this.start.getDate());
+            var thisStartFromDate = decodeDateTag(this.start_from);
+            if ( walkingDate <= thisStartFromDate && thisStartFromDate < endCalculationsFromDate ) {
+                walkingDate = new Date(thisStartFromDate.getFullYear(), thisStartFromDate.getMonth(), thisStartFromDate.getDate());
+            } else if ( walkingDate > thisStartFromDate && walkingDate < endCalculationsFromDate ) {
+                let calibrate = new Date(thisStartFromDate.getFullYear(), thisStartFromDate.getMonth(), thisStartFromDate.getDate());
                 while ( walkingDate > calibrate ) {
-                    calibrate.setDate(calibrate.getDate() + this.freq );
+                    calibrate.setDate(calibrate.getDate() + this.frequency );
                 }
                 if ( calibrate < endCalculationsFromDate ) {
                     walkingDate = new Date(calibrate.getFullYear(), calibrate.getMonth(), calibrate.getDate());
                 } else return [];
             } else return [];
-            while ( walkingDate < endCalculationsFromDate && (this.end == null ? true : walkingDate < this.end )) {
+            while ( walkingDate < endCalculationsFromDate && (this.end_from == null ? true : walkingDate < decodeDateTag(this.end_from) )) {
                 let dateDetailsAmount = 0;
                 dateDetailsAmount = this.amount;
                 if ( walkingDate < todayDate ) dateDetailsAmount = -(this.amount);
@@ -155,17 +156,30 @@ class MoneyMove {
                     dateDetails.details.push({
                         name: this.name,
                         amount: dateDetailsAmount,
-                        appliedTo: this.appliedTo,
+                        appliedTo: this.applied_to,
                         account: this.account,
                         type: 'loss'
                     });
                 }
                 dateList.push(dateDetails);
-                walkingDate.setDate(walkingDate.getDate() + this.freq);
+                walkingDate.setDate(walkingDate.getDate() + this.frequency);
             }
         }
 
         return dateList;
+    }
+
+    async save() {
+        await postTo("/moneysources/new", this)
+        .then(response => {
+            if ( response.status == 200 ) {
+                return response.json();
+            }
+            return response;
+        })
+        .then(json => {
+            return json;
+        })
     }
 
 }
@@ -210,6 +224,25 @@ class Account {
         }
     }
 
+    save() {
+        let account_save = {
+            "name": this.name,
+            "type": this.type,
+            "balance": this.originalBalance,
+            "credit_limit": ( this.creditLimit == undefined ? null : this.creditLimit )
+        };
+        postTo("/accounts/new", account_save)
+        .then(response => {
+            if ( response.status == 200 ) {
+                return response.json();
+            }
+            return response;
+        })
+        .then(json => {
+            console.log(json);
+        })
+    }
+
     // resetBalanceTenses(memo, pastInd, futureInd) {
     //     if ( memo != undefined && memo != null && Object.keys(memo).length ) {
     //         this.futureBalance = memo[Object.keys(memo)[futureInd]].balances[this.name];
@@ -227,7 +260,7 @@ var finances = {
         "Capital One Checkings": new Account(
             "Capital One Checkings",
             "debit",
-            1359.99 - 55 - 40
+            1568.63 - 1133.44
         ),
         "Capital One Platinum": new Account(
             "Capital One Platinum",
@@ -261,7 +294,7 @@ var finances = {
             amount: 1100.00,
             basedOnDate: true,
             startFrom: null,
-            endFrom: new Date(2022, 7, 2),
+            endFrom: dateTagFromDate(new Date(2022, 7, 2)),
             frequency: null,
             date: "start",
             account: "Capital One Checkings"
@@ -271,7 +304,7 @@ var finances = {
             type: "expense",
             amount: 700.00,
             basedOnDate: true,
-            startFrom: new Date(2022, 7, 2),
+            startFrom: dateTagFromDate(new Date(2022, 7, 2)),
             endFrom: null,
             frequency: null,
             date: "start",
@@ -283,7 +316,7 @@ var finances = {
             amount: 81.33,
             basedOnDate: true,
             startFrom: null,
-            endFrom: new Date(2023, 4, 18),
+            endFrom: dateTagFromDate(new Date(2023, 4, 18)),
             frequency: null,
             date: 17,
             account: "Capital One Checkings"
@@ -293,7 +326,7 @@ var finances = {
             type: "expense",
             amount: 60,
             basedOnDate: true,
-            startFrom: new Date(2023, 4, 18),
+            startFrom: dateTagFromDate(new Date(2023, 4, 18)),
             endFrom: null,
             frequency: null,
             date: 17,
@@ -338,7 +371,7 @@ var finances = {
             type: "expense",
             amount: 40.00,
             basedOnDate: false,
-            startFrom: new Date(2022, 0, 3),
+            startFrom: dateTagFromDate(new Date(2022, 0, 3)),
             endFrom: null,
             frequency: 7,
             date: null,
@@ -423,8 +456,8 @@ var finances = {
             basedOnDate: false,
             date: null,
             account: "Capital One Checkings",
-            startFrom: new Date(2022, 0, 7),
-            endFrom: new Date(2022, 3, 2),
+            startFrom: dateTagFromDate(new Date(2022, 0, 7)),
+            endFrom: dateTagFromDate(new Date(2022, 3, 2)),
             frequency: 14,
             wage: 17,
             hours: 80,
@@ -440,8 +473,8 @@ var finances = {
             basedOnDate: false,
             date: null,
             account: "Capital One Checkings",
-            startFrom: new Date(2022, 3, 15),
-            endFrom: new Date(2023, 2, 1),
+            startFrom: dateTagFromDate(new Date(2022, 3, 15)),
+            endFrom: dateTagFromDate(new Date(2023, 2, 1)),
             frequency: 14,
             wage: 23.80,
             hours: 80,
@@ -457,7 +490,7 @@ var finances = {
             basedOnDate: false,
             date: null,
             account: "Capital One Checkings",
-            startFrom: new Date(2023, 2, 3),
+            startFrom: dateTagFromDate(new Date(2023, 2, 3)),
             endFrom: null,
             frequency: 14,
             wage: 33.40,
@@ -474,8 +507,8 @@ var finances = {
             basedOnDate: false,
             date: null,
             account: "Capital One Checkings",
-            startFrom: new Date(2022, 0, 3),
-            endFrom: new Date(2022, 2, 25),
+            startFrom: dateTagFromDate(new Date(2022, 0, 3)),
+            endFrom: dateTagFromDate(new Date(2022, 2, 25)),
             frequency: 14,
             amount: 630.00
         }),

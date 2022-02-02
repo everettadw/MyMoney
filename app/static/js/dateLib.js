@@ -8,3 +8,6 @@ function decodeDateTag(dateTag) {
 function getDateTag(year, month, date) {
     return ( month >= 10 ? month.toString() : "0" + month.toString() ) + ( date >= 10 ? date.toString() : "0" + date.toString() ) + year.toString();
 }
+function dateTagFromDate(date) {
+    return ( date.getMonth() >= 10 ? date.getMonth().toString() : "0" + date.getMonth().toString() ) + ( date.getDate() >= 10 ? date.getDate().toString() : "0" + date.getDate().toString() ) + date.getFullYear().toString();
+}

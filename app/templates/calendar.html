@@ -80,8 +80,8 @@
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src="{{ url_for('static', filename='ledger.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='calendar.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='finances.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='index.js') }}"></script>
+    <script type="text/javascript" src={{ url_for('static', filename='js/calendar/finances.js') }}></script>
+    <script type="text/javascript" src={{ url_for('static', filename='js/calendar/ledger.js') }}></script>
+    <script type="text/javascript" src={{ url_for('static', filename='js/calendar/calendar.js') }}></script>
+    <script type="text/javascript" src={{ url_for('static', filename='js/calendar/index.js') }}></script>
 {% endblock %}

@@ -1,6 +1,14 @@
 {% extends "template.html" %}
 {% block content %}
     <div>
-        <h1>SETTINGS</h1>
+        <div class="button" id="clear-all"><p>Clear All</p></div>
+        <div class="button" id="save-all"><p>Save All</p></div>
+        <br />
+        <ul id="users"></ul>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src={{ url_for('static', filename='js/calendar/finances.js') }}></script>
+    <script type="text/javascript" src={{ url_for('static', filename='js/settings.js') }}></script>
 {% endblock %}

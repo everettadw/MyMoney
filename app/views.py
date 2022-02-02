@@ -1,8 +1,8 @@
 import base64
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask import flash, jsonify, redirect, render_template, request, url_for
-from .models import MoneySource, User
+from flask import flash, jsonify, make_response, redirect, render_template, request, url_for
+from .models import Account, MoneySource, User
 from . import app, db, login_manager
 
 @login_manager.user_loader # User loader
@@ -38,6 +38,8 @@ def load_user_from_request(request):
 # tries to access a page without being logged in.
 @login_manager.unauthorized_handler
 def handle_needs_login():
+    if ( request.method == 'POST' ):
+        return make_response(jsonify({"Error": "You are not authorized to use this resource."}), 401)
     flash("Please login to access that page.")
     return redirect(url_for('login'))
 
@@ -46,14 +48,26 @@ def handle_needs_login():
 def reset_db():
     db.drop_all()
     db.create_all()
-    User.create(first_name="Everett", last_name="Daniels-Wright", username="admin", email="business.eadw@gmail.com", password=generate_password_hash("Ai12eqfav%"))
-    User.create(first_name="Darren", last_name="Wright", username="guest", email="guest@gmail.com", password=generate_password_hash("testing"))
+    User.create({
+        "first_name": "Everett",
+        "last_name": "Daniels-Wright",
+        "username": "admin",
+        "email": "business.eadw@gmail.com",
+        "password": generate_password_hash("Ai12eqfav%")
+    })
+    User.create({
+        "first_name": "Darren",
+        "last_name": "Wright",
+        "username": "guest",
+        "email": "guest@gmail.com",
+        "password": generate_password_hash("testing")
+    })
     return redirect(url_for('logout'))
 
 @app.route("/", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('home'))
+        return redirect(url_for('calendar'))
 
     if request.method == 'POST':
         user = User.query.filter_by(username=request.get_json()['username']).first()
@@ -84,29 +98,24 @@ def calendar():
 def settings():
     return render_template("settings.html")
 
-@app.route("/users", methods=['GET'])
+@app.route("/users", methods=['POST'])
 @login_required
 def get_users():
     users = User.query.all()
-    if users == None:
-        return jsonify({
-            "Error": "No users exist."
-        })
     return_json = []
     for user in users:
         user_json = user.json()
-        user_json['MoneySources'] = len(user.money_sources)
+        user_json['money_sources'] = len(user.money_sources)
+        user_json['accounts'] = len(user.accounts)
         return_json.append(user_json)
     return jsonify(return_json)    
 
-@app.route("/users/<username>", methods=['GET'])
+@app.route("/users/<username>", methods=['POST'])
 @login_required
 def get_user(username):
     user_ex = User.query.filter_by(username=username).first()
     if user_ex == None:
-        return jsonify({
-            "Error": "User does not exist."
-        })
+        return jsonify([])
     return_json = []
     return_json.append(user_ex.json())
     return_json[0]['MoneySources'] = [money_source.json() for money_source in user_ex.money_sources]
@@ -116,13 +125,8 @@ def get_user(username):
 @login_required
 def create_user():
     request_body = request.get_json()
-    if ('username' not in request_body) or ('email' not in request_body):
-        return jsonify({
-            "Error": "Fields 'username' and 'email' are required."
-        })
-    new_user = User(username=request_body['username'], email=request_body['email'])
-    db.session.add(new_user)
-    db.session.commit()
+    request_body['password'] = generate_password_hash(request_body['password'])
+    User.create(request_body)
     return jsonify({
         "Success": "User '" + request_body['username'] + "' created."
     })
@@ -146,31 +150,44 @@ def delete_user():
         "Success": "User '" + proper_request['username'] + "' has been deleted."
     })
 
-@app.route("/moneysources", methods=['GET'])
+@app.route("/moneysources", methods=['POST'])
 @login_required
 def get_money_sources():
     money_sources = MoneySource.query.all()
-    if money_sources == None:
-        return jsonify({
-            "Error": "There are no money sources."
-        })
     return_json = []
     for money_source in money_sources:
         return_json.append(money_source.json())
     return jsonify(return_json)
 
-@app.route("/moneysources/new", methods=['POST', 'GET'])
+@app.route("/moneysources/new", methods=['POST'])
 @login_required
 def create_money_source():
     proper_request = request.get_json()
-    test_source = MoneySource.create(
-        return_obj=True,
-        name='Rent',
-        type='Expense',
-        user_id=current_user.id,
-        date='00012022',
-        account="Capital One Checkings",
-        based_on_date=True,
-        amount=1100
-    )
+    proper_request['user_id'] = current_user.id
+    test_source = MoneySource.create(proper_request, True)
     return jsonify(test_source.json())
+
+@app.route("/moneysources/delete-all", methods=['POST'])
+@login_required
+def delete_all_money_sources():
+    for money_source in current_user.money_sources:
+        money_source.remove()
+
+    return jsonify({"Status": "Success!"})
+
+@app.route("/accounts", methods=['POST'])
+@login_required
+def get_accounts():
+    accounts = Account.query.all()
+    return_json = []
+    for account in accounts:
+        return_json.append(account.json())
+    return jsonify(return_json)
+
+@app.route("/accounts/new", methods=['POST'])
+@login_required
+def create_account():
+    proper_request = request.get_json()
+    proper_request['user_id'] = current_user.id
+    new_account = Account.create(proper_request, True)
+    return jsonify(new_account.json())
