@@ -6,9 +6,12 @@
             <span class="nav-toggle-design" id="nav-toggle-bar-3"></span>
         </div>
         <nav>
-            <a href={{ url_for('calendar') }}>Calendar</a>
-            <a href={{ url_for('settings') }}>Settings</a>
-            <a href={{ url_for('logout') }}>Logout</a>
+            <div id="backdrop">
+                <h1>MENU</h1>
+            </div>
+            <a href={{ url_for('calendar') }}>CALENDAR</a>
+            <a href={{ url_for('settings') }}>SETTINGS</a>
+            <a href={{ url_for('logout') }}>LOGOUT</a>
         </nav>
     </div>
 {% endif %}

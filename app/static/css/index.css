@@ -1,18 +1,8 @@
 /* variables & reset */
 :root {
     --calendar-height: 900px;
+}
 
-    user-select: none;
-    -moz-user-select: none;
-    -webkit-user-select: none;
-}
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Helvetica, Arial;
-    list-style: none;
-}
 body {
     width: 100vw;
     height: 100vh;

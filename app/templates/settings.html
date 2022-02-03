@@ -1,10 +1,24 @@
 {% extends "template.html" %}
 {% block content %}
     <div>
-        <div class="button" id="clear-all"><p>Clear All</p></div>
-        <div class="button" id="save-all"><p>Save All</p></div>
-        <br />
-        <ul id="users"></ul>
+        <div id="menu-container">
+            <div id="menu-links">
+                <div class="menu-link active" id="accounts-link"><p>Accounts</p></div>
+                <div class="menu-link" id="income-link"><p>Income</p></div>
+                <div class="menu-link" id="accounts-link"><p>Expenses</p></div>
+            </div>
+            <div id="menu-body">
+                <div id="accounts-body">
+
+                </div>
+                <div id="income-body">
+                    
+                </div>
+                <div id="expenses-body">
+                    
+                </div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 

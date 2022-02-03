@@ -3,8 +3,9 @@
     <head>
         <title>My Money Calendar</title>
 
-        <link rel="stylesheet" href={{ url_for('static', filename='css/index.css') }} />
+        <link rel="stylesheet" href={{ url_for('static', filename='css/main.css') }} />
         <link rel="stylesheet" href={{ url_for('static', filename='css/nav.css') }} />
+        {% block css %}{% endblock %}
     </head>
     <body>
         {% include "nav.html" %}
@@ -13,7 +14,7 @@
 
         {% with messages = get_flashed_messages() %}
             {% if messages %}
-                <div id="messages">
+                <div id="flash-messages">
                     {% for message in messages %}
                         <p class="flash-message">{{message}}</p>
                     {% endfor %}
