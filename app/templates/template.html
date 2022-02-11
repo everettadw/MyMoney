@@ -10,7 +10,9 @@
     <body>
         {% include "nav.html" %}
         
+        <div id="content">
         {% block content %}{% endblock %}
+        </div>
 
         {% with messages = get_flashed_messages() %}
             {% if messages %}

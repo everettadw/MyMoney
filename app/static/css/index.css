@@ -13,6 +13,8 @@ body {
 }
 
 #calendar {
+    filter: blur(0px);
+    transition: all .25s ease;
     width: calc(var(--calendar-height) * 1.122222222222222222222222222);
     position: relative;
     display: inline-block;
