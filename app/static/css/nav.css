@@ -64,13 +64,13 @@ div#nav-toggle.open #nav-toggle-bar-1 {
 }
 
 div#nav-toggle.open:hover #nav-toggle-bar-3 {
-    transform: scale(0.7) rotate(35deg);
+    transform: scale(1) rotate(45deg);
 }
 div#nav-toggle.open:hover #nav-toggle-bar-2 {
     width: 0%;
 }
 div#nav-toggle.open:hover #nav-toggle-bar-1 {
-    transform: scale(0.7) rotate(-35deg);
+    transform: scale(1) rotate(-45deg);
 }
 
 nav {
@@ -103,7 +103,7 @@ nav #backdrop {
 }
 nav #backdrop h1 {
     font-size: 30vw;
-    color: rgba(0,0,0,0.4);
+    color: rgba(0,0,0,0.1);
     z-index: 1;
 }
 

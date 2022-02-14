@@ -44,7 +44,8 @@ class Modal {
         this.#modalClose.setAttribute("id", "modal-close");
         this.#modalClose.innerHTML = "+";
         this.#modalClose.style.position = "fixed";
-        this.#modalClose.style.transform = "rotate(45deg)";
+        this.#modalClose.style.transform = "rotate(45deg) scale(0.8)";
+        this.#modalClose.style.transformOrigin = "center center";
         this.#modalClose.style.transition = "transform .25s cubic-bezier(0.311, 0.441, 0.444, 1.649)";
         this.#modalClose.style.fontWeight = "bold";
         this.#modalClose.style.fontSize = "36px";
@@ -62,10 +63,10 @@ class Modal {
             this.hide();
         }, false);
         this.#modalClose.addEventListener("mouseover", e => {
-            this.#modalClose.style.transform = "rotate(135deg)";
+            this.#modalClose.style.transform = "rotate(45deg) scale(1.1)";
         }, false);
         this.#modalClose.addEventListener("mouseleave", e => {
-            this.#modalClose.style.transform = "rotate(45deg)";
+            this.#modalClose.style.transform = "rotate(45deg) scale(0.8)";
         }, false);
 
         setTimeout(() => {
