@@ -260,7 +260,6 @@ var finances = {
         "Capital One Checkings": new Account(
             "Capital One Checkings",
             "debit",
-            1568.63 - 1133.44
         ),
         "Capital One Platinum": new Account(
             "Capital One Platinum",

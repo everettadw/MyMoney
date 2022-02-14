@@ -23,6 +23,8 @@ class Modal {
         this.#modalContainer.style.position = "fixed";
         this.#modalContainer.style.display = "none";
         this.#modalContainer.style.pointerEvents = "none";
+        this.#modalContainer.style.left = "0";
+        this.#modalContainer.style.top = "0";
         this.#modalContainer.style.zIndex = "989";
         this.#modalContainer.style.justifyContent = "center";
         this.#modalContainer.style.alignItems = "center";

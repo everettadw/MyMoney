@@ -1,7 +1,7 @@
 window.onload = () => {
 
     // Grabbing all elements necessary for calendar operation
-    let secondary = el('#secondary-pane');
+    let modalPane = el('#modal-pane');
     let calendarElement = el("#calendar");
     let nextMonthBtn = el("#next-month-button");
     let prevMonthBtn = el("#prev-month-button");
@@ -13,7 +13,7 @@ window.onload = () => {
     let myCal = new Calendar(new Date(), calendarElement, personalFinances);
 
     // Creating the modal for the date information
-    let dateDetailsModal = new Modal(secondary, "600px", "500px", true);
+    let dateDetailsModal = new Modal(modalPane, "600px", "500px", true);
 
     // Assigning functions to the calendar buttons and defining what happens
     // when a calendar square is clicked.

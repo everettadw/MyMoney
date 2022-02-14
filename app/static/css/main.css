@@ -8,3 +8,12 @@
     -moz-user-select: none;
     -webkit-user-select: none;
 }
+
+div#content {
+    transition: all .25s ease;
+    filter: blur(0px);
+}
+
+.blurred {
+    filter: blur(25px) !important;
+}
