@@ -64,33 +64,87 @@ def reset_db():
     })
     return redirect(url_for('logout'))
 
-@app.route("/", methods=['GET', 'POST'])
-def login():
-    if current_user.is_authenticated:
-        return redirect(url_for('calendar'))
-
-    if request.method == 'POST':
-        user = User.query.filter_by(username=request.get_json()['username']).first()
-        if user and check_password_hash(user.password, request.get_json()['password']):
-            login_user(user, remember=True)
-            return jsonify({
-                "Status": "SUCCESS"
-            })
-        return jsonify({
-            "Status": "FAILURE"
-        })
-
-    return render_template('login.html')
-
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
         return redirect(url_for('calendar'))
 
     if request.method == 'POST':
-        return jsonify({"JSON": "YUP"})
+        first_name = request.get_json()['first_name']
+        last_name = request.get_json()['last_name']
+        email = request.get_json()['email']
+        new_username = request.get_json()['username']
+        new_password = request.get_json()['password']
+        password_confirm = request.get_json()['password_confirm']
+        check_username = User.query.filter_by(username=new_username).first()
+        check_email = User.query.filter_by(email=email).first()
+        if len(first_name) == 0 or len(last_name) == 0 or len(email) == 0 or len(new_username) == 0 or len(new_password) == 0 or len(password_confirm) == 0:
+            return jsonify({
+                "Status": "FAILURE",
+                "Error": "All fields must be filled."
+            })
+        if check_email != None:
+            return jsonify({
+                "Status": "FAILURE",
+                "Error": "You already have an account associated with that email."
+            })
+        if check_username != None:
+            return jsonify({
+                "Status": "FAILURE",
+                "Error": "Username not available."
+            })
+        if len(new_password) < 8:
+            return jsonify({
+                "Status": "FAILURE",
+                "Error": "Password must be at least 8 characters long."
+            })
+        if new_password != password_confirm:
+            return jsonify({
+                "Status": "FAILURE",
+                "Error": "Passwords do not match."
+            })
+        if not len(first_name) > 1 or not len(last_name) > 1:
+            return jsonify({
+                "Status": "FAILURE",
+                "Error": "Invalid first or last name."
+            })
+        if len(email) < 6:
+            return jsonify({
+                "Status": "FAILURE",
+                "Error": "Invalid email."
+            })
+        User.create({
+            "first_name": first_name,
+            "last_name": last_name,
+            "email": email,
+            "username": new_username,
+            "password": generate_password_hash(new_password)
+        })
+        return jsonify({
+            "Status": "SUCCESS"
+        })
 
     return render_template('register.html')
+
+@app.route("/", methods=['GET', 'POST'])
+def login():
+    if current_user.is_authenticated:
+        return redirect(url_for('calendar'))
+
+    if request.method == 'POST':
+        username = request.get_json()['username']
+        password = request.get_json()['password']
+        user = User.query.filter_by(username=username).first()
+        if user == None or not check_password_hash(user.password, password):
+            return jsonify({
+                "Status": "FAILURE"
+            })
+        login_user(user)
+        return jsonify({
+            "Status": "SUCCESS"
+        })
+
+    return render_template('login.html')
 
 @app.route("/logout", methods=['GET'])
 @login_required

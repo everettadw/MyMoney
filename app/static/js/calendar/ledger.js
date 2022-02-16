@@ -30,7 +30,7 @@ class Ledger {
         
         let futMML = moneyMoveList.filter(moneyMove => decodeDateTag(moneyMove.dateTag) > todayDate);
         if ( futMML.length ) { // Today is somewhere in the months being calculated
-            reversedPastMoneyMoveList = moneyMoveList.splice(0, (moneyMoveList.length - futMML.length - 1));
+            reversedPastMoneyMoveList = moneyMoveList.splice(0, (moneyMoveList.length - futMML.length));
             if ( decodeDateTag(moneyMoveList[0].dateTag) == todayDate ) currentMoneyMove = moneyMoveList.splice(0, 1);
             futureMoneyMoveList = moneyMoveList.splice(0, moneyMoveList.length - 1);
         } else if ( decodeDateTag(moneyMoveList[0].dateTag) > todayDate ) { // Today is behind the months being calculated

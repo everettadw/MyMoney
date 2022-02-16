@@ -10,8 +10,21 @@ form {
 .control-group-row,
 .control-group-col {
     display: flex;
-    margin: 10px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     width: 350px;
+}
+
+.control-row-inputs {
+    justify-content: space-between;
+}
+
+.no-margin {
+    margin: 0;
+}
+
+.control-errors {
+    margin: 5px;
 }
 
 .control-group-row {
@@ -20,6 +33,12 @@ form {
 
 .control-group-col {
     flex-direction: column;
+}
+
+.error-text {
+    color: red;
+    font-weight: bold;
+    text-align: center;
 }
 
 .form-button {
@@ -33,7 +52,18 @@ form {
     text-align: center;
     font-size: 1rem;
     font-family: Helvetica, Arial, sans-serif;
-    width: 50%;
+}
+
+.half-button {
+    width: 48%;
+}
+
+.half-input {
+    width: 48%;
+}
+
+.full-button {
+    width: 100%;
 }
 
 .primary-button {

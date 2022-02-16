@@ -12,9 +12,7 @@ document.addEventListener("submit", e => {
         if (json['Status'] == "SUCCESS") {
             window.location = "http://127.0.0.1:5000/calendar";
         } else if (json['Status'] == "FAILURE") {
-            console.log("Invalid credentials.");
+            el("#error-text").innerHTML = "Invalid credentials, try again.";
         }
     })
-
-    console.log(e);
 }, false)

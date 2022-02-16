@@ -12,9 +12,12 @@
             <label for="password" class="input-label">Password</label>
             <input type="password" name="password" id="password" />
         </div>
-        <div class="control-group-row">
-            <input class="form-button primary-button" type="submit" value="Login" />
-            <a class="form-button secondary-button" href="/register">Register</a>
+        <div class="control-group-col control-errors">
+            <p class="error-text" id="error-text"></p>
+        </div>
+        <div class="control-group-col control-buttons">
+            <input class="form-button primary-button full-button" type="submit" value="Login" />
+            <a class="form-button secondary-button full-button" href="/register">Register</a>
         </div>
     </form>
 {% endblock %}

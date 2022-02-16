@@ -4,9 +4,23 @@
 {% endblock %}
 {% block content %}
     <form action="/" method="POST">
+        <div class="control-group-row control-row-inputs no-margin">
+            <div class="control-group-col half-button">
+                <label for="first-name" class="input-label">First Name</label>
+                <input type="text" name="first-name" id="first-name" />
+            </div>
+            <div class="control-group-col half-button">
+                <label for="last-name" class="input-label">Last Name</label>
+                <input type="text" name="last-name" id="last-name" />
+            </div>
+        </div>
         <div class="control-group-col">
             <label for="username" class="input-label">Username</label>
             <input type="text" name="username" id="username" />
+        </div>
+        <div class="control-group-col">
+            <label for="email" class="input-label">Email</label>
+            <input type="text" name="email" id="email" />
         </div>
         <div class="control-group-col">
             <label for="password" class="input-label">Password</label>
@@ -16,13 +30,16 @@
             <label for="confirm-password" class="input-label">Confirm Password</label>
             <input type="password" name="confirm-password" id="confirm-password" />
         </div>
-        <div class="control-group-row">
-            <input class="form-button primary-button" type="submit" value="Register" />
-            <a class="form-button secondary-button" href="/">Login</a>
+        <div class="control-group-col control-errors">
+            <p class="error-text" id="error-text"></p>
+        </div>
+        <div class="control-group-col">
+            <input class="form-button primary-button full-button" type="submit" value="Register" />
+            <a class="form-button secondary-button full-button" href="/">Login</a>
         </div>
     </form>
 {% endblock %}
 
 {% block scripts %}
-    <script type="text/javascript" src={{ url_for('static', filename='/js/login.js') }}></script>
+    <script type="text/javascript" src={{ url_for('static', filename='/js/register.js') }}></script>
 {% endblock %}

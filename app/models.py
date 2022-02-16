@@ -63,6 +63,7 @@ class Account(BaseMixin, db.Model):
     type = db.Column(db.String(30), nullable=False)
     balance = db.Column(db.Integer, nullable=False)
     credit_limit = db.Column(db.Integer, nullable=True)
+    last_updated = db.Column(db.String(8), nullable=True)
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
 
