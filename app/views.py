@@ -1,4 +1,5 @@
 import base64
+from re import L
 from flask_login import current_user, login_required, login_user, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import flash, jsonify, make_response, redirect, render_template, request, url_for
@@ -229,13 +230,18 @@ def delete_all_money_sources():
 
     return jsonify({"Status": "Success!"})
 
-@app.route("/accounts", methods=['POST'])
+@app.route("/accounts", methods=['POST', 'GET'])
 @login_required
 def get_accounts():
-    accounts = Account.query.all()
+    accounts = Account.query.filter_by(user_id=current_user.id).all()
     return_json = []
     for account in accounts:
-        return_json.append(account.json())
+        append_json = account.json()
+        append_json.pop('user_id')
+        if append_json['credit_limit'] == None:
+            append_json.pop('credit_limit')
+        append_json.pop('last_updated')
+        return_json.append(append_json)
     return jsonify(return_json)
 
 @app.route("/accounts/new", methods=['POST'])
@@ -245,3 +251,29 @@ def create_account():
     proper_request['user_id'] = current_user.id
     new_account = Account.create(proper_request, True)
     return jsonify(new_account.json())
+
+@app.route("/accounts/delete", methods=['POST'])
+@login_required
+def delete_account():
+    proper_request = request.get_json()
+    account_to_delete = Account.query.filter_by(id=proper_request['id']).first()
+    if account_to_delete == None or account_to_delete.user_id != current_user.id:
+        return jsonify({
+            "Status": "FAILURE",
+            "Error": "Account with that id does not exist."
+        })
+    db.session.delete(account_to_delete)
+    db.session.commit()
+    return jsonify({
+        "Status": "SUCCESS"
+    })
+
+@app.route("/accounts/update", methods=['POST'])
+@login_required
+def update_account():
+    proper_request = request.get_json();
+    Account.query.filter_by(id=proper_request['id'], user_id=current_user.id).update(proper_request)
+    db.session.commit()
+    return jsonify({
+        "Status": "SUCCESS"
+    })

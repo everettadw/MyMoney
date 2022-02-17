@@ -15,7 +15,7 @@
         </div>
         <div id="menu-body">
             <div id="menu-actions">
-                <div class="action-button"><p>+ Create <span id="create-menu-title" class="span-transition" data-content="Account">Expenses</span></p></div>
+                <div id='create-field' class="action-button"><p>+ Create <span id="create-menu-title" class="span-transition" data-content="Account">Expenses</span></p></div>
             </div>
             <div id="menu-body-content">
                 <div class="menu-body" id="accounts-body">
@@ -23,13 +23,13 @@
 
 
 
-                    <div class="field" id="0" context="0">
+                    <div class="field" id="account-field-template" context="0">
                         <div class="field-row">
                             <div>
-                                <p>Capital One Checkings - $817.98</p>
+                                <p></p>
                             </div>
                             <div>
-                                <div class="action-button field-edit-button"><p><span id="edit-menu-title_account-0" class="span-transition" data-content="Edit">Edit&nbsp;&nbsp;&nbsp;</span></p></div>
+                                <div class="action-button field-edit-button"><p><span id="edit-menu-title_account-template" class="span-transition" data-content="Edit">Edit&nbsp;&nbsp;&nbsp;</span></p></div>
                                 <div class="action-button field-delete-button"><p>Delete</p></div>
                             </div>
                         </div>
@@ -38,12 +38,12 @@
                                 <div class="split-horizontal">
                                     <div class="split-vertical">
                                         <div class="control-group">
-                                            <label class="field-edit-input-label" for="name_account-0">Name</label>
-                                            <input class="field-edit-input" type="text" id="name_account-0" name="name" value="Capital One Checkings" />
+                                            <label class="field-edit-input-label" for="name_account-template">Name</label>
+                                            <input class="field-edit-input" type="text" id="name_account-template" />
                                         </div>
                                         <div class="control-group">
-                                            <label class="field-edit-input-label" for="originalBalance_account-0">Balance</label>
-                                            <input class="field-edit-input" type="text" name="originalBalance" id="originalBalance_account-0" value="817.98" />
+                                            <label class="field-edit-input-label" for="balance_account-template">Balance</label>
+                                            <input class="field-edit-input" type="text" id="balance_account-template" />
                                         </div>
                                     </div>
                                     <div class="split-vertical">
@@ -51,18 +51,16 @@
                                             <div class="control-group-radio"> 
                                                 <h3>Account Type</h3>
                                                 <div>
-                                                    <input class="field-edit-radio" checked type="radio" name="type" id="debit_account-0" value="debit" />
-                                                    <label class="field-edit-radio-label" for="debit_account-0">Debit</label>
-                                                    <input class="field-edit-radio" type="radio" name="type" id="credit_account-0" value="credit" />
-                                                    <label class="field-edit-radio-label" for="credit_account-0">Credit</label>
+                                                    <input class="field-edit-radio" checked type="radio" name="type" id="debit_account-template" value="Debit" />
+                                                    <label class="field-edit-radio-label" for="debit_account-template">Debit</label>
+                                                    <input class="field-edit-radio" type="radio" name="type" id="credit_account-template" value="Credit" />
+                                                    <label class="field-edit-radio-label" for="credit_account-template">Credit</label>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="split-two-vertical">
-                                            <div class="control-group disabled">
-                                                <label class="field-edit-input-label" for="credit-limit_account-0">Credit Limit</label>
-                                                <input class="field-edit-input" disabled type="text" name="credit-limit" id="credit-limit_account-0" value="" />
-                                            </div>
+                                        <div class="control-group disabled">
+                                            <label class="field-edit-input-label" for="credit-limit_account-template">Credit Limit</label>
+                                            <input class="field-edit-input" disabled type="text" name="credit-limit" id="credit-limit_account-template" />
                                         </div>
                                     </div>
                                 </div>
@@ -73,98 +71,6 @@
 
 
                     
-                    <div class="field" id="1" context="0">
-                        <div class="field-row">
-                            <div>
-                                <p>Capital One Platinum - $3250.98</p>
-                            </div>
-                            <div>
-                                <div class="action-button field-edit-button"><p><span id="edit-menu-title_account-1" class="span-transition" data-content="Edit">Edit&nbsp;&nbsp;&nbsp;</span></p></div>
-                                <div class="action-button field-delete-button"><p>Delete</p></div>
-                            </div>
-                        </div>
-                        <div class="field-edit">
-                            <form action="" method="POST" autocomplete="off">
-                                <div class="split-horizontal">
-                                    <div class="split-vertical">
-                                        <div class="control-group">
-                                            <label class="field-edit-input-label" for="name_account-1">Name</label>
-                                            <input class="field-edit-input" type="text" id="name_account-1" name="name" value="Capital One Platinum" />
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="field-edit-input-label" for="originalBalance_account-1">Balance</label>
-                                            <input class="field-edit-input" type="text" name="originalBalance" id="originalBalance_account-1" value="3250.98" />
-                                        </div>
-                                    </div>
-                                    <div class="split-vertical">
-                                        <div>
-                                            <div class="control-group-radio"> 
-                                                <h3>Account Type</h3>
-                                                <div>
-                                                    <input class="field-edit-radio" type="radio" name="type" id="debit_account-1" value="debit" />
-                                                    <label class="field-edit-radio-label" for="debit_account-1">Debit</label>
-                                                    <input class="field-edit-radio" checked type="radio" name="type" id="credit_account-1" value="credit" />
-                                                    <label class="field-edit-radio-label" for="credit_account-1">Credit</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="split-two-vertical">
-                                            <div class="control-group">
-                                                <label class="field-edit-input-label" for="credit-limit_account-1">Credit Limit</label>
-                                                <input class="field-edit-input" type="text" name="credit-limit" id="credit-limit_account-1" value="3300.00" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <div class="field" id="2" context="0">
-                        <div class="field-row">
-                            <div>
-                                <p>Capital One Quick - $0.00</p>
-                            </div>
-                            <div>
-                                <div class="action-button field-edit-button"><p><span id="edit-menu-title_account-2" class="span-transition" data-content="Edit">Edit&nbsp;&nbsp;&nbsp;</span></p></div>
-                                <div class="action-button field-delete-button"><p>Delete</p></div>
-                            </div>
-                        </div>
-                        <div class="field-edit">
-                            <form action="" method="POST" autocomplete="off">
-                                <div class="split-horizontal">
-                                    <div class="split-vertical">
-                                        <div class="control-group">
-                                            <label class="field-edit-input-label" for="name_account-2">Name</label>
-                                            <input class="field-edit-input" type="text" id="name_account-2" name="name" value="Capital One Quick" />
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="field-edit-input-label" for="originalBalance_account-2">Balance</label>
-                                            <input class="field-edit-input" type="text" name="originalBalance" id="originalBalance_account-2" value="0.00" />
-                                        </div>
-                                    </div>
-                                    <div class="split-vertical">
-                                        <div>
-                                            <div class="control-group-radio"> 
-                                                <h3>Account Type</h3>
-                                                <div>
-                                                    <input class="field-edit-radio" type="radio" name="type" id="debit_account-2" value="debit" />
-                                                    <label class="field-edit-radio-label" for="debit_account-2">Debit</label>
-                                                    <input class="field-edit-radio" checked type="radio" name="type" id="credit_account-2" value="credit" />
-                                                    <label class="field-edit-radio-label" for="credit_account-2">Credit</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="split-two-vertical">
-                                            <div class="control-group">
-                                                <label class="field-edit-input-label" for="credit-limit_account-2">Credit Limit</label>
-                                                <input class="field-edit-input" type="text" name="credit-limit" id="credit-limit_account-2" value="500.00" />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
                 </div>
                 <div class="menu-body" id="income-body">
                     
