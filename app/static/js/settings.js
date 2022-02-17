@@ -3,6 +3,7 @@ let accountsBody = el("#accounts-body");
 let incomeBody = el("#income-body");
 let expensesBody = el("#expenses-body");
 
+accountsBody.scrollIntoView();
 el("#accounts-link").addEventListener("click", e => {
     el('.active').classList.remove('active');
     e.target.classList.add("active");
