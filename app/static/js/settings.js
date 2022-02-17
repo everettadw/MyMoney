@@ -1,3 +1,44 @@
+class AccountField {
+
+    #fieldElement;
+    #fieldContainer;
+    #fieldEditForm;
+    #fieldRowTitle;
+    #nameInput;
+    #balanceInput;
+    #accountTypeRadio1;
+    #accountTypeRadio2;
+    #creditLimitInput;
+    #editActionButton;
+    #deleteActionButton;
+
+    constructor(fieldContainer, accountDetails) {
+        // Give the field an id after it's been saved.
+        this.#fieldElement = document.createElement("div", {classList: ['field']});
+        fieldElement.setAttribute("context", "0");
+
+        let fieldRow = document.createElement("div", {classList: ['field-row']});
+
+        let fieldEdit = document.createElement("div", {classList: ["field-edit"]});
+
+        this.#fieldRowTitle = document.createElement("p");
+
+
+    }
+
+    save() {
+
+    }
+
+}
+
+
+
+
+
+
+
+
 let menuContext = 0;
 let menuBody = el("#menu-body");
 let accountsBody = el("#accounts-body");
