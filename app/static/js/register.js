@@ -5,7 +5,6 @@ document.addEventListener("submit", e => {
         "first_name": el("#first-name").value,
         "last_name": el("#last-name").value,
         "email": el("#email").value,
-        "username": el("#username").value,
         "password": el("#password").value,
         "password_confirm": el("#confirm-password").value
     })

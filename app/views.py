@@ -51,14 +51,12 @@ def reset_db():
     User.create({
         "first_name": "Everett",
         "last_name": "Daniels-Wright",
-        "username": "admin",
         "email": "business.eadw@gmail.com",
         "password": generate_password_hash("Ai12eqfav%")
     })
     User.create({
         "first_name": "Darren",
         "last_name": "Wright",
-        "username": "guest",
         "email": "guest@gmail.com",
         "password": generate_password_hash("testing")
     })
@@ -73,12 +71,10 @@ def register():
         first_name = request.get_json()['first_name']
         last_name = request.get_json()['last_name']
         email = request.get_json()['email']
-        new_username = request.get_json()['username']
         new_password = request.get_json()['password']
         password_confirm = request.get_json()['password_confirm']
-        check_username = User.query.filter_by(username=new_username).first()
         check_email = User.query.filter_by(email=email).first()
-        if len(first_name) == 0 or len(last_name) == 0 or len(email) == 0 or len(new_username) == 0 or len(new_password) == 0 or len(password_confirm) == 0:
+        if len(first_name) == 0 or len(last_name) == 0 or len(email) == 0 or len(new_password) == 0 or len(password_confirm) == 0:
             return jsonify({
                 "Status": "FAILURE",
                 "Error": "All fields must be filled."
@@ -87,11 +83,6 @@ def register():
             return jsonify({
                 "Status": "FAILURE",
                 "Error": "You already have an account associated with that email."
-            })
-        if check_username != None:
-            return jsonify({
-                "Status": "FAILURE",
-                "Error": "Username not available."
             })
         if len(new_password) < 8:
             return jsonify({
@@ -117,7 +108,6 @@ def register():
             "first_name": first_name,
             "last_name": last_name,
             "email": email,
-            "username": new_username,
             "password": generate_password_hash(new_password)
         })
         return jsonify({
@@ -132,9 +122,9 @@ def login():
         return redirect(url_for('calendar'))
 
     if request.method == 'POST':
-        username = request.get_json()['username']
+        email = request.get_json()['email']
         password = request.get_json()['password']
-        user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(email=email).first()
         if user == None or not check_password_hash(user.password, password):
             return jsonify({
                 "Status": "FAILURE"

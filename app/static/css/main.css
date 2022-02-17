@@ -9,6 +9,10 @@
     -webkit-user-select: none;
 }
 
+body {
+    background-color: rgb(25, 25, 25);
+}
+
 input {
     user-select: text;
     -moz-user-select: text;
@@ -21,5 +25,5 @@ div#content {
 }
 
 .blurred {
-    filter: blur(25px) !important;
+    filter: blur(10px) !important;
 }

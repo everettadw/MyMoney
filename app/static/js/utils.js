@@ -51,4 +51,12 @@ function mergeSort(arr) {
 async function postTo(url, data) {
   return fetch(url, {method: 'POST', body: JSON.stringify(data), headers: {'Content-Type': 'application/json'}});
 }
-  
+function randDarkColor() {
+  let returnRGB = "rgb(";
+  for ( let i = 0; i < 3; i++ ) {
+    returnRGB += Math.floor(Math.random() * 50 + 10).toString();
+    if ( i < 2 ) returnRGB += ", ";
+  }
+  returnRGB += ")";
+  return returnRGB;
+}

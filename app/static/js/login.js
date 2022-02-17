@@ -2,7 +2,7 @@ document.addEventListener("submit", e => {
     e.preventDefault();
 
     postTo('/', {
-        "username": el("#username").value,
+        "email": el("#email").value,
         "password": el("#password").value
     })
     .then(response => {
