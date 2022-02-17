@@ -3,7 +3,7 @@
     <link rel="stylesheet" href={{ url_for('static', filename='css/forms.css') }} />
 {% endblock %}
 {% block content %}
-    <form action="/" method="POST">
+    <form action="/" method="POST" autocomplete="off">
         <div class="control-group-col">
             <label for="email" class="input-label">Email</label>
             <input type="text" name="email" id="email" />
