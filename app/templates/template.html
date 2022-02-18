@@ -1,17 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>My Money Calendar</title>
-
         <link rel="preload" href={{ url_for('static', filename='css/main.css') }} as="style" />
         <link rel="preload" href={{ url_for('static', filename='css/nav.css') }} as="style" />
         {% block preload %}{% endblock %}
-    </head>
-    <body>
         <link rel="stylesheet" href={{ url_for('static', filename='css/main.css') }} />
         <link rel="stylesheet" href={{ url_for('static', filename='css/nav.css') }} />
         {% block css %}{% endblock %}
-
+        
+        <title>My Money Calendar</title>
+    </head>
+    <body>
         {% include "nav.html" %}
         
         <div id="content">

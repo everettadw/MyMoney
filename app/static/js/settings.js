@@ -1,7 +1,7 @@
 class AccountField {
 
     #fieldElement;
-    #accountId;
+    #accountFieldDetails;
     #fieldRowTitle;
     #fieldRowTitleValue;
     #accountTypeRadio1;
@@ -22,7 +22,7 @@ class AccountField {
                 if ( response.status == 200 ) return response.json();
             })
             .then(json => {
-                this.#accountId = json['id'];
+                this.#accountFieldDetails = json;
                 this.#fieldElement.setAttribute("id", json['id']);
                 fieldEditButton.children[0].children[0].setAttribute("id", "edit-menu-title_account-" + json['id']);
                 this.#nameInput.setAttribute("id", "name_account-" + json['id']);
@@ -45,8 +45,6 @@ class AccountField {
         this.#fieldRowTitleValue = accountDetails['name'] + " - $" + accountDetails['balance'];
         this.#fieldRowTitle = this.#fieldElement.children[0].children[0].children[0];
 
-        this.#fieldRowTitle.innerHTML = this.#fieldRowTitleValue;
-
         this.#nameInput = this.#fieldElement.children[1].children[0].children[0].children[0].children[0].children[1];
         this.#nameInput.value = accountDetails['name'];
 
@@ -66,10 +64,14 @@ class AccountField {
             this.#creditLimitInput.disabled = false;
             this.#creditLimitInput.parentNode.classList.remove("disabled");
             this.#creditLimitInput.value = accountDetails['credit_limit'];
+
+            this.#fieldRowTitleValue += " / $" + accountDetails['credit_limit'];
         }
 
+        this.#fieldRowTitle.innerHTML = this.#fieldRowTitleValue;
+
         if ( !creating ) {
-            this.#accountId = accountDetails['id'];
+            this.#accountFieldDetails = accountDetails;
             this.#fieldElement.setAttribute("id", accountDetails['id']);
             fieldEditButton.children[0].children[0].setAttribute("id", "edit-menu-title_account-" + accountDetails['id']);
             this.#nameInput.setAttribute("id", "name_account-" + accountDetails['id']);
@@ -106,8 +108,12 @@ class AccountField {
                 })
                 .then(json => {
                     if ( json['Status'] == "SUCCESS" ) {
-                        this.#fieldRowTitleValue = this.#nameInput.value + " - $" + this.#balanceInput.value;
+                        this.#fieldRowTitleValue = this.#nameInput.value + " - $" + this.#balanceInput.value + ( this.#accountTypeValue == "Credit" ? " / $" + this.#creditLimitInput.value : "" );
                         this.#fieldRowTitle.innerHTML = this.#fieldRowTitleValue;
+                        this.#accountFieldDetails['name'] = this.#nameInput.value;
+                        this.#accountFieldDetails['balance'] = this.#balanceInput.value;
+                        this.#accountFieldDetails['type'] = this.#accountTypeValue;
+                        this.#accountFieldDetails['credit_limit'] = this.#creditLimitInput.value;
                     }
                 })
                 changeMenuTitle(e.target.children[0].children[0].getAttribute("id"), "Edit");
