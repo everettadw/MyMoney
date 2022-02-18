@@ -55,14 +55,18 @@ class AccountField {
 
         this.#accountTypeValue = accountDetails['type'];
         this.#creditLimitInput = this.#fieldElement.children[1].children[0].children[0].children[1].children[1].children[1];
+
+        this.#accountTypeRadio1 = this.#fieldElement.children[1].children[0].children[0].children[1].children[0].children[0].children[0];
+        this.#accountTypeRadio2 = this.#fieldElement.children[1].children[0].children[0].children[1].children[0].children[0].children[2];
+        
         if ( this.#accountTypeValue == "Credit" ) {
-            this.#creditLimitInput.setAttribute("disabled", "false");
+            this.#accountTypeRadio1.setAttribute("checked", false);
+            this.#accountTypeRadio2.setAttribute("checked", true);
+
+            this.#creditLimitInput.disabled = false;
             this.#creditLimitInput.parentNode.classList.remove("disabled");
             this.#creditLimitInput.value = accountDetails['credit_limit'];
         }
-
-        this.#accountTypeRadio1 = this.#fieldElement.children[1].children[0].children[0].children[1].children[0].children[0].children[1].children[0];
-        this.#accountTypeRadio2 = this.#fieldElement.children[1].children[0].children[0].children[1].children[0].children[0].children[1].children[2];
 
         if ( !creating ) {
             this.#accountId = accountDetails['id'];
@@ -123,6 +127,20 @@ class AccountField {
                 }
             });
         })
+
+        this.#accountTypeRadio1.addEventListener("click", e => {
+            this.#accountTypeValue = "Debit";
+            this.#creditLimitInput.value = "";
+            this.#creditLimitInput.disabled = true;
+            this.#creditLimitInput.parentNode.classList.add("disabled");
+        }, false)
+
+        this.#accountTypeRadio2.addEventListener("click", e => {
+            this.#accountTypeValue = "Credit";
+            this.#creditLimitInput.value = "";
+            this.#creditLimitInput.disabled = false;
+            this.#creditLimitInput.parentNode.classList.remove("disabled");
+        }, false);
 
         fieldContainer.appendChild(this.#fieldElement);
     }

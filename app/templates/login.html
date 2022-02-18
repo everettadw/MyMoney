@@ -1,7 +1,13 @@
 {% extends "template.html" %}
+
+{% block preload %}
+    <link rel="preload" href={{ url_for('static', filename='css/forms.css') }} as="style" />
+{% endblock %}
+
 {% block css %}
     <link rel="stylesheet" href={{ url_for('static', filename='css/forms.css') }} />
 {% endblock %}
+
 {% block content %}
     <form action="/" method="POST" autocomplete="off">
         <div class="control-group-col">
