@@ -99,30 +99,27 @@ body {
 
 .span-transition {
     position: relative;
-    color: transparent;
+    color: whitesmoke;
+    display: inline-block;
+    text-align: center;
+    width: 7ch;
+}
+.span-transition-small {
+    width: 5ch;
 }
 .span-transition::before {
     content: "";
     position: absolute;
-    right: 3%;
-    bottom: -10%;
-    width: 100%;
-    height: 0%;
-    transition: height .25s ease;
+    right: -5%;
+    bottom: -5%;
+    width: 0%;
+    height: 110%;
+    transition: width .25s ease;
     background: whitesmoke;
 }
-.span-transition::after {
-    content: attr(data-content);
-    position: absolute;
-    left: 0;
-    top: 0px;
-    width: 100%;
-    height: 100%;
-    color: whitesmoke;
-}
 .span-transition.changing::before {
-    height: 120%;
-    top: -10% !important;
+    width: 110%;
+    left: -5% !important;
 }
 
 .field-open {

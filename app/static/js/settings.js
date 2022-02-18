@@ -1,5 +1,11 @@
 class AccountField {
 
+    static #fieldTemplate;
+
+    static setFieldTemplate(element) {
+        this.#fieldTemplate = element;
+    }
+
     #fieldElement;
     #accountFieldDetails;
     #fieldRowTitle;
@@ -20,6 +26,7 @@ class AccountField {
             })
             .then(response => {
                 if ( response.status == 200 ) return response.json();
+                else console.log(response.status);
             })
             .then(json => {
                 this.#accountFieldDetails = json;
@@ -38,7 +45,7 @@ class AccountField {
             });
         }
 
-        this.#fieldElement = AccountFieldHTMLClone.cloneNode(true);
+        this.#fieldElement = AccountField.#fieldTemplate.cloneNode(true);
         let fieldEditButton = this.#fieldElement.children[0].children[1].children[0];
         let fieldDeleteButton = this.#fieldElement.children[0].children[1].children[1];
         
@@ -87,7 +94,7 @@ class AccountField {
         }
 
         fieldEditButton.addEventListener("click", e => {
-            if ( el(".field-open") != null && e.target.children[0].children[0].getAttribute("data-content") != "Save" ) {
+            if ( el(".field-open") != null && e.target.children[0].children[0].innerHTML != "Save" ) {
                 let oldOpenField = el(".field-open");
                 changeMenuTitle(oldOpenField.children[0].children[1].children[0].children[0].children[0].getAttribute("id"), "Edit");
                 oldOpenField.classList.remove("field-open");
@@ -105,6 +112,7 @@ class AccountField {
                 })
                 .then(response => {
                     if ( response.status == 200 ) return response.json();
+                    else console.log(response.status);
                 })
                 .then(json => {
                     if ( json['Status'] == "SUCCESS" ) {
@@ -126,6 +134,7 @@ class AccountField {
             })
             .then(response => {
                 if ( response.status == 200 ) return response.json();
+                else console.log(response.status);
             })
             .then(json => {
                 if ( json['Status'] == 'SUCCESS' ) {
@@ -152,71 +161,74 @@ class AccountField {
     }
 }
 
-let AccountFieldHTMLClone = null;
-let menuContext = 0;
-let menuBody = el("#menu-body");
-let accountsBody = el("#accounts-body");
-let incomeBody = el("#income-body");
-let expensesBody = el("#expenses-body");
 
-accountsBody.scrollIntoView();
+
+// Init up menu context variable.
+let menuContext = 0;
+el("#accounts-body").scrollIntoView();
+
+
+
+// Event listeners for all of the context menu links.
+// Also event listeners for context actions above the context
+// menu body.
 el("#accounts-link").addEventListener("click", e => {
     el('.active').classList.remove('active');
     e.target.classList.add("active");
-    accountsBody.scrollIntoView();
+    el("#accounts-body").scrollIntoView();
     changeMenuTitle("create-menu-title", "Account");
     menuContext = 0;
 }, false);
 el("#income-link").addEventListener("click", e => {
     el('.active').classList.remove('active');
     e.target.classList.add("active");
-    incomeBody.scrollIntoView();
+    el("#income-body").scrollIntoView();
     changeMenuTitle("create-menu-title", "Income");
     menuContext = 1;
 }, false);
 el("#expenses-link").addEventListener("click", e => {
     el('.active').classList.remove('active');
     e.target.classList.add("active");
-    expensesBody.scrollIntoView();
+    el("#expenses-body").scrollIntoView();
     changeMenuTitle("create-menu-title", "Expense");
     menuContext = 2;
 }, false);
+
 el("#create-field").addEventListener("click", e => {
     let newField = new AccountField(el("#accounts-body"), {'name': 'Example', 'type': 'Debit', 'balance': 1000.00}, creating = true);
 }, false);
-Array.from(document.body.getElementsByClassName("field-edit-button")).forEach(button => {
-    button.addEventListener("click", e => {
-        if ( el(".field-open") != null && e.target.children[0].children[0].getAttribute("data-content") != "Save" ) {
-            let oldOpenField = el(".field-open");
-            changeMenuTitle(oldOpenField.children[0].children[1].children[0].children[0].children[0].getAttribute("id"), "Edit");
-            oldOpenField.classList.remove("field-open");
-        }
-        e.target.parentNode.parentNode.parentNode.classList.toggle("field-open");
-        if ( e.target.parentNode.parentNode.parentNode.classList.contains("field-open") ) {
-            changeMenuTitle(e.target.children[0].children[0].getAttribute("id"), "Save");
-        } else {
-            changeMenuTitle(e.target.children[0].children[0].getAttribute("id"), "Edit");
-        }
-    }, false);
-});
 
-function changeMenuTitle(menuTitleId, newTitle) {
-    el("#" + menuTitleId).classList.add("changing");
-    setTimeout(() => {
-        el("#" + menuTitleId).setAttribute("data-content", newTitle);
-        el("#" + menuTitleId).classList.remove("changing");
-    }, 300);
-}
 
-AccountFieldHTMLClone = el("#account-field-template").cloneNode(true);
+
+// Create clones of the template fields, and store them in their respective
+// field classes. Delete them after they've been assigned their class.
+AccountField.setFieldTemplate(el("#account-field-template").cloneNode(true));
 el("#account-field-template").remove();
 
+
+
+// Load all accounts, income, and expenses and populate the tables with the results
+// in their own field classes.
+
+// == ACCOUNTS ==
 postTo("/accounts")
 .then(response => {
     if ( response.status == 200 ) return response.json();
+    else console.log(response.status);
 })
 .then(json => {
     json.forEach(account => {
-        let newAccountField = new AccountField(el('#accounts-body'), account, false);
+        let _ = new AccountField(el('#accounts-body'), account, false);
     })
 })
+
+
+
+// Utility class for animations on text that changes between contexts in the menu.
+function changeMenuTitle(menuTitleId, newTitle) {
+    el("#" + menuTitleId).classList.add("changing");
+    setTimeout(() => {
+        el("#" + menuTitleId).innerHTML = newTitle;
+        el("#" + menuTitleId).classList.remove("changing");
+    }, 250);
+}
