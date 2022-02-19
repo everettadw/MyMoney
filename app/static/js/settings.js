@@ -94,11 +94,7 @@ class AccountField {
         }
 
         fieldEditButton.addEventListener("click", e => {
-            if ( el(".field-open") != null && e.target.children[0].children[0].innerHTML != "Save" ) {
-                let oldOpenField = el(".field-open");
-                changeMenuTitle(oldOpenField.children[0].children[1].children[0].children[0].children[0].getAttribute("id"), "Edit");
-                oldOpenField.classList.remove("field-open");
-            }
+            closeOpenFields(e);
             e.target.parentNode.parentNode.parentNode.classList.toggle("field-open");
             if ( e.target.parentNode.parentNode.parentNode.classList.contains("field-open") ) {
                 changeMenuTitle(e.target.children[0].children[0].getAttribute("id"), "Save");
@@ -173,6 +169,7 @@ el("#accounts-body").scrollIntoView();
 // Also event listeners for context actions above the context
 // menu body.
 el("#accounts-link").addEventListener("click", e => {
+    closeOpenFields();
     el('.active').classList.remove('active');
     e.target.classList.add("active");
     el("#accounts-body").scrollIntoView();
@@ -180,6 +177,7 @@ el("#accounts-link").addEventListener("click", e => {
     menuContext = 0;
 }, false);
 el("#income-link").addEventListener("click", e => {
+    closeOpenFields();
     el('.active').classList.remove('active');
     e.target.classList.add("active");
     el("#income-body").scrollIntoView();
@@ -187,6 +185,7 @@ el("#income-link").addEventListener("click", e => {
     menuContext = 1;
 }, false);
 el("#expenses-link").addEventListener("click", e => {
+    closeOpenFields();
     el('.active').classList.remove('active');
     e.target.classList.add("active");
     el("#expenses-body").scrollIntoView();
@@ -224,11 +223,18 @@ postTo("/accounts")
 
 
 
-// Utility class for animations on text that changes between contexts in the menu.
+// Utility functions.
 function changeMenuTitle(menuTitleId, newTitle) {
     el("#" + menuTitleId).classList.add("changing");
     setTimeout(() => {
         el("#" + menuTitleId).innerHTML = newTitle;
         el("#" + menuTitleId).classList.remove("changing");
     }, 250);
+}
+function closeOpenFields(e = null) {
+    if ( el(".field-open") != null && ( e == null || e.target.children[0].children[0].innerHTML != "Save" ) ) {
+        let oldOpenField = el(".field-open");
+        changeMenuTitle(oldOpenField.children[0].children[1].children[0].children[0].children[0].getAttribute("id"), "Edit");
+        oldOpenField.classList.remove("field-open");
+    }
 }

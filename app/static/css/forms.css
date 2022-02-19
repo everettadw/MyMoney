@@ -80,27 +80,3 @@ form {
 .secondary-button:hover {
     color: whitesmoke;
 }
-
-input[type=text],
-input[type=password] {
-    padding: 10px;
-    letter-spacing: 1px;
-    border-radius: 0px;
-    font-size: 1rem;
-    border: 2px solid whitesmoke;
-    color: whitesmoke;
-    background-color: transparent;
-    transition: all .25s ease;
-}
-
-input[type=text]:focus,
-input[type=password]:focus {
-    outline: none;
-}
-
-.input-label {
-    font-family: Helvetica, Arial, sans-serif;
-    letter-spacing: 1px;
-    color: whitesmoke;
-    margin-bottom: 3px;
-}

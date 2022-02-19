@@ -9,14 +9,18 @@
 {% endblock %}
 
 {% block content %}
-    <form action="/" method="POST" autocomplete="off">
+    <form action="/" method="POST">
         <div class="control-group-col">
-            <label for="email" class="input-label">Email</label>
-            <input type="text" name="email" id="email" />
+            <div class="evput">
+                <input type="text" autocomplete="off" name="email" id="email" required />
+                <label for="email" class="input-label">EMAIL</label>
+            </div>
         </div>
         <div class="control-group-col">
-            <label for="password" class="input-label">Password</label>
-            <input type="password" name="password" id="password" />
+            <div class="evput">
+                <input type="password" name="password" id="password" required />
+                <label for="password" class="input-label">PASSWORD</label>
+            </div>
         </div>
         <div class="control-group-col control-errors">
             <p class="error-text" id="error-text"></p>
