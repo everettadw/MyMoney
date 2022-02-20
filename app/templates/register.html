@@ -10,38 +10,49 @@
 
 {% block content %}
     <form action="/" method="POST" autocomplete="off">
-        <div class="control-group-row control-row-inputs no-margin">
-            <div class="control-group-col half-button">
-                <label for="first-name" class="input-label">First Name</label>
-                <input type="text" name="first-name" id="first-name" />
+        <div class="control-group-row flex-space-between no-margin">
+            <div class="control-group-col half-input">
+                <div class="evput">
+                    <input  type="text" name="first-name" id="first-name" />
+                    <label for="first-name" class="input-label">First Name</label>
+                </div>
             </div>
-            <div class="control-group-col half-button">
-                <label for="last-name" class="input-label">Last Name</label>
-                <input type="text" name="last-name" id="last-name" />
+            <div class="control-group-col half-input">
+                <div class="evput">
+                    <input type="text" name="last-name" id="last-name" />
+                    <label for="last-name" class="input-label">Last Name</label>
+                </div>
             </div>
         </div>
         <div class="control-group-col">
-            <label for="email" class="input-label">Email</label>
-            <input type="text" name="email" id="email" />
+            <div class="evput">
+                <input type="text" name="email" id="email" />
+                <label for="email" class="input-label">Email</label>
+            </div>
         </div>
         <div class="control-group-col">
-            <label for="password" class="input-label">Password</label>
-            <input type="password" name="password" id="password" />
+            <div class="evput">
+                <input type="password" name="password" id="password" />
+                <label for="password" class="input-label">Password</label>
+            </div>
         </div>
         <div class="control-group-col">
-            <label for="confirm-password" class="input-label">Confirm Password</label>
-            <input type="password" name="confirm-password" id="confirm-password" />
+            <div class="evput">
+                <input type="password" name="confirm-password" id="confirm-password" />
+                <label for="confirm-password" class="input-label">Confirm Password</label>
+            </div>
         </div>
-        <div class="control-group-col control-errors">
+        <div class="control-group-col no-margin" id="form-errors">
             <p class="error-text" id="error-text"></p>
         </div>
-        <div class="control-group-col">
-            <input class="form-button primary-button full-button" type="submit" value="Register" />
-            <a class="form-button secondary-button full-button" href="/">Login</a>
+        <div class="control-group-row">
+            <input class="form-button primary-button half-button" type="submit" value="Register" />
+            <a class="form-button secondary-button half-button" href="/">Login</a>
         </div>
     </form>
 {% endblock %}
 
 {% block scripts %}
     <script type="text/javascript" src={{ url_for('static', filename='/js/register.js') }}></script>
+    <script type="text/javascript" src={{ url_for('static', filename='/js/evput.js') }}></script>
 {% endblock %}

@@ -7,6 +7,9 @@ form {
     flex-direction: column;
 }
 
+.flex-space-between { justify-content: space-between; }
+.no-margin { margin: 0 !important; }
+
 .control-group-row,
 .control-group-col {
     display: flex;
@@ -14,69 +17,125 @@ form {
     margin-bottom: 10px;
     width: 350px;
 }
-
-.control-row-inputs {
-    justify-content: space-between;
-}
-
-.no-margin {
-    margin: 0;
-}
-
-.control-errors {
-    margin: 5px;
-}
-
 .control-group-row {
     flex-direction: row;
 }
-
 .control-group-col {
     flex-direction: column;
 }
 
+#form-errors {
+    height: 0px;
+    justify-content: center;
+    transition: height .25s ease;
+}
 .error-text {
-    color: rgb(170, 0, 0);
+    color: rgb(211, 16, 16);
     font-weight: bold;
+    opacity: 0;
+    padding: 10px 0px;
+    position: relative;
+    left: -10px;
+    transition: opacity .25s ease, left .25s ease;
+    transition-delay: .10s;
     text-align: center;
+}
+.error-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    bottom: 0%;
+    left: 0;
+    width: 100%;
+    background: red;
+    transition: bottom .25s ease;
+}
+#form-errors.error-present {
+    height: 50px;
+}
+#form-errors.error-present .error-text {
+    opacity: 1;
+    left: 0;
+}
+.shaking {
+    animation-name: shaking-anim;
+    animation-fill-mode: forwards;
+    animation-duration: 0.15s;
+    animation-iteration-count: infinite;
+}
+.error-text.changing::after {
+    animation-name: change-error-text;
+    animation-duration: .4s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease;
+    animation-iteration-count: 1;
 }
 
 .form-button {
-    padding: 15px 30px;
+    border-radius: 5px;
+    padding: 20px 30px;
     border: none;
     letter-spacing: 1px;
     cursor: pointer;
     transition: all .25s ease;
     text-decoration: none;
+    font-weight: bold;
     color: rgb(0, 0, 0, 0.95);
     text-align: center;
     font-size: 1rem;
     font-family: Helvetica, Arial, sans-serif;
 }
-
 .half-button {
-    width: 48%;
+    width: 50%;
 }
-
-.half-input {
-    width: 48%;
-}
-
 .full-button {
     width: 100%;
 }
+.half-input {
+    width: 47.5% !important;
+}
 
 .primary-button {
-    color: white;
+    color: rgb(25, 25, 25);
     background-color: rgb(26, 126, 126);
 }
 .secondary-button {
-    color: rgb(255, 255, 255, 0.6);
+    color: rgb(255, 255, 255, 0.75);
 }
 
-.primary-button:hover {
-    background-color: rgb(19, 94, 94);
+.primary-button:hover,
+.primary-button:focus {
+    outline: none;
+    background-color: rgb(32, 180, 180);
 }
-.secondary-button:hover {
+.secondary-button:hover,
+.secondary-button:focus {
+    outline: none;
     color: whitesmoke;
+}
+
+@keyframes shaking-anim {
+    0% { left: 0px; }
+    25% { left: -3px; }
+    50% { left: 0px; }
+    75% { left: 3px; }
+    100% { left: 0px; }
+}
+@keyframes change-error-text {
+    0% {
+        top: 100%;
+        bottom: 0%;
+    }
+    40% {
+        top: 0%;
+        bottom: 0%;
+    }
+    60% {
+        top: 0%;
+        bottom: 0%;
+    }
+    100% {
+        top: 0%;
+        bottom: 100%;
+    }
 }

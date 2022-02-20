@@ -37,7 +37,6 @@ div#content {
     border-radius: 5px;
     background-color: rgba(245, 245, 245, 0.75);
     font-family: Helvetica, Arial, sans-serif;
-    letter-spacing: 1px;
     transition: all .25s ease;
 }
 .evput input:autofill {
@@ -50,9 +49,9 @@ div#content {
     position: absolute;
     font-weight: bold;
     font-size: 0.8rem;
-    transition: all .25s ease;
+    color: rgb(25, 25, 25);
 }
-.evput input:invalid + label {
+.empty-evput + label {
     top: 22px;
     left: 25px;
     font-size: 1rem;

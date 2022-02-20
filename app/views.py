@@ -61,7 +61,9 @@ def reset_db():
         "email": "guest@gmail.com",
         "password": generate_password_hash("testing")
     })
-    return redirect(url_for('logout'))
+    if current_user.is_authenticated:
+        return redirect(url_for('logout'))
+    return redirect(url_for("login"))
 
 @app.route("/register", methods=['GET', 'POST'])
 def register():
@@ -126,9 +128,15 @@ def login():
         email = request.get_json()['email']
         password = request.get_json()['password']
         user = User.query.filter_by(email=email).first()
+        if len(password) == 0:
+            return jsonify({
+                "Status": "FAILURE",
+                "Error": "Please fill the password field."
+            })
         if user == None or not check_password_hash(user.password, password):
             return jsonify({
-                "Status": "FAILURE"
+                "Status": "FAILURE",
+                "Error": "Invalid credentials, try again."
             })
         login_user(user)
         return jsonify({
