@@ -156,6 +156,11 @@ def logout():
 def calendar():
     return render_template("calendar.html")
 
+@app.route("/finances")
+@login_required
+def finances():
+    return render_template("financial_config.html")
+
 @app.route("/settings")
 @login_required
 def settings():

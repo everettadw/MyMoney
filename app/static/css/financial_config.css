@@ -1,0 +1,252 @@
+body {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+#menu-container {
+    width: 80vw;
+    height: 80vh;
+    display: flex;
+    position: relative;
+}
+
+#menu-links {
+    width: 10%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+
+#menu-body {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+.menu-body {
+    width: 100%;
+    height: 100%;
+    flex-shrink: 0;
+    position: relative;
+    overflow-y: auto;
+}
+
+#menu-body-content {
+    width: 100%;
+    height: calc(100% - 50px);
+    top: 50px;
+    display: flex;
+    flex-direction: row;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+/* #accounts-body {
+    background: blue;
+}
+#income-body {
+    background: yellow;
+}
+#expenses-body {
+    background: purple;
+} */
+
+.menu-link {
+    margin-bottom: 10px;
+}
+
+.active {
+    color: whitesmoke !important;
+}
+.menu-link p {
+    padding: 3px;
+    cursor: pointer;
+    transition: all .25s ease;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.5);
+}
+.menu-link p:hover {
+    color: whitesmoke;
+}
+
+#menu-actions {
+    position: fixed;
+    position: relative;
+    top: 0;
+    right: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    padding-right: 25px;
+    padding-left: 25px;
+    align-items: center;
+    border-bottom: 2px solid rgba(245, 245, 245, 0.6);
+    color: whitesmoke;
+}
+
+.action-button {
+    cursor: pointer;
+    transition: all .25s ease;
+    opacity: 0.6;
+}
+.action-button:hover {
+    opacity: 1;
+}
+
+.span-transition {
+    position: relative;
+    color: whitesmoke;
+    display: inline-block;
+    text-align: center;
+    width: 7ch;
+}
+.span-transition-small {
+    width: 5ch;
+}
+.span-transition::before {
+    content: "";
+    position: absolute;
+    right: -5%;
+    bottom: -5%;
+    width: 0%;
+    height: 110%;
+    transition: width .25s ease;
+    background: whitesmoke;
+}
+.span-transition.changing::before {
+    width: 110%;
+    left: -5% !important;
+}
+
+.field-open {
+    height: 350px !important;
+}
+.field-open .field-edit {
+    opacity: 1 !important;
+    pointer-events: all !important;
+}
+
+.field {
+    width: 100%;
+    height: 50px;
+    transition: height .25s ease;
+    color: whitesmoke;
+    border-bottom: 2px solid rgba(245, 245, 245, 0.6);
+    overflow: hidden;
+}
+.field-edit {
+    transition: opacity .25s ease;
+    pointer-events: none;
+    opacity: 0;
+}
+.field-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 30px;
+    padding-right: 30px;
+    height: 50px;
+    width: 100%;
+}
+.field-row div:last-of-type {
+    display: flex;
+    flex-direction: row;
+}
+.field-row div:last-of-type .action-button {
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.disabled * {
+    pointer-events: none;
+    opacity: 0.5;
+}
+
+.field-edit-button * {
+    pointer-events: none;
+}
+
+.field-edit-input {
+    border: 2px solid rgba(245, 245, 245, 0.6);
+    transition: all .25s ease;
+    padding: 5px 10px;
+    letter-spacing: 1px;
+    font-size: 1rem;
+    background: none;
+    color: whitesmoke;
+}
+.field-edit-input:focus {
+    outline: none;
+    border-color: whitesmoke;
+    color: whitesmoke;
+}
+
+.split-horizontal {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 300px;
+    width: 100%;
+}
+.split-vertical {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 300px;
+    margin-left: 50px;
+    margin-right: 50px;
+}
+
+.control-group,
+.control-group-radio {
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    justify-content: center;
+}
+
+.control-group-radio {
+    width: 222px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.control-group-radio h3 {
+    margin-bottom: 10px;
+}
+.control-group-radio label {
+    width: 50%;
+    position: relative;
+    top: 9px;
+    height: 32px;
+    line-height: 32px;
+    text-align: center;
+    background-color: whitesmoke;
+    color: black;
+    opacity: 0.6;
+    cursor: pointer;
+    transition: all .25s ease;
+}
+.control-group-radio label:hover {
+    opacity: 0.8;
+}
+
+.field-edit-radio {
+    display: none;
+}
+.field-edit-radio:checked + label:hover {
+    opacity: 1;
+}
+.field-edit-radio:checked + label {
+    opacity: 1;
+}

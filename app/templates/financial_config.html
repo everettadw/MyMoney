@@ -1,0 +1,90 @@
+{% extends "template.html" %}
+
+{% block preload %}
+    <link rel="preload" href={{ url_for('static', filename='css/financial_config.css')}} as="style" />
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href={{ url_for('static', filename='css/financial_config.css')}} />
+{% endblock %}
+
+{% block content %}
+    <div id="menu-container">
+        <div id="menu-links">
+            <div>
+                <div class="menu-link" id="accounts-link"><p class="active">Accounts</p></div>
+                <div class="menu-link" id="income-link"><p>Income</p></div>
+                <div class="menu-link" id="expenses-link"><p>Expenses</p></div>
+            </div>
+        </div>
+        <div id="menu-body">
+            <div id="menu-actions">
+                <div id='create-field' class="action-button"><p>+ Create <span id="create-menu-title" class="span-transition" data-content="Account">Account</span></p></div>
+            </div>
+            <div id="menu-body-content">
+                <div class="menu-body" id="accounts-body">
+
+
+
+
+                    <div class="field" id="account-field-template" context="0">
+                        <div class="field-row">
+                            <div>
+                                <p></p>
+                            </div>
+                            <div>
+                                <div class="action-button field-edit-button"><p><span id="edit-menu-title_account-template" class="span-transition span-transition-small">Edit</span></p></div>
+                                <div class="action-button field-delete-button"><p>Delete</p></div>
+                            </div>
+                        </div>
+                        <div class="field-edit">
+                            <form action="" method="POST" autocomplete="off">
+                                <div class="split-horizontal">
+                                    <div class="split-vertical">
+                                        <div class="control-group">
+                                            <label class="field-edit-input-label" for="name_account-template">Name</label>
+                                            <input class="field-edit-input" type="text" id="name_account-template" />
+                                        </div>
+                                        <div class="control-group">
+                                            <label class="field-edit-input-label" for="balance_account-template">Balance</label>
+                                            <input class="field-edit-input" type="text" id="balance_account-template" />
+                                        </div>
+                                    </div>
+                                    <div class="split-vertical">
+                                        <div>
+                                            <div class="control-group-radio">
+                                                <input class="field-edit-radio" checked type="radio" name="type" id="debit_account-template" value="Debit" />
+                                                <label class="field-edit-radio-label" for="debit_account-template">Debit</label>
+                                                <input class="field-edit-radio" type="radio" name="type" id="credit_account-template" value="Credit" />
+                                                <label class="field-edit-radio-label" for="credit_account-template">Credit</label>
+                                            </div>
+                                        </div>
+                                        <div class="control-group disabled">
+                                            <label class="field-edit-input-label" for="credit-limit_account-template">Credit Limit</label>
+                                            <input class="field-edit-input" disabled type="text" name="credit-limit" id="credit-limit_account-template" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+
+                    
+                </div>
+                <div class="menu-body" id="income-body">
+                    
+                </div>
+                <div class="menu-body" id="expenses-body">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src={{ url_for('static', filename='js/calendar/finances.js') }}></script>
+    <script type="text/javascript" src={{ url_for('static', filename='js/financial_config.js') }}></script>
+{% endblock %}

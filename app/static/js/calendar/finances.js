@@ -260,13 +260,12 @@ var finances = {
         "Capital One Checkings": new Account(
             "Capital One Checkings",
             "debit",
-            // 920.22-112.17
-            99999
+            1771.00
         ),
         "Capital One Platinum": new Account(
             "Capital One Platinum",
             "credit",
-            3294.52,
+            3212.56,
             3300.00
         ),
         "Capital One Quicksilver": new Account(
@@ -278,7 +277,7 @@ var finances = {
         "Discover It": new Account(
             "Discover It",
             "credit",
-            1741.66,
+            1724.50,
             1750.00
         ),
         "Apple Card": new Account(
@@ -336,7 +335,7 @@ var finances = {
         new MoneyMove({
             name: "Discover Credit Payment",
             type: "expense",
-            amount: 51.00,
+            amount: 53.00,
             basedOnDate: true,
             startFrom: null,
             endFrom: null,
@@ -425,7 +424,7 @@ var finances = {
         new MoneyMove({
             name: "Capital One Platinum Payment",
             type: "expense",
-            amount: 35.00,
+            amount: 101.00,
             basedOnDate: true,
             startFrom: null,
             endFrom: null,
