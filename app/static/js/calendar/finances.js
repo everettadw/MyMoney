@@ -257,35 +257,35 @@ class Account {
 
 var finances = {
     accounts: {
-        "Capital One Checkings": new Account(
-            "Capital One Checkings",
-            "debit",
-            1771.00
-        ),
-        "Capital One Platinum": new Account(
-            "Capital One Platinum",
-            "credit",
-            3212.56,
-            3300.00
-        ),
-        "Capital One Quicksilver": new Account(
-            "Capital One Quicksilver",
-            "credit",
-            0,
-            500.00
-        ),
-        "Discover It": new Account(
-            "Discover It",
-            "credit",
-            1724.50,
-            1750.00
-        ),
-        "Apple Card": new Account(
-            "Apple Card",
-            "credit",
-            0,
-            4000.00
-        )
+    //     "Capital One Checkings": new Account(
+    //         "Capital One Checkings",
+    //         "debit",
+    //         1771.00
+    //     ),
+    //     "Capital One Platinum": new Account(
+    //         "Capital One Platinum",
+    //         "credit",
+    //         3212.56,
+    //         3300.00
+    //     ),
+    //     "Capital One Quicksilver": new Account(
+    //         "Capital One Quicksilver",
+    //         "credit",
+    //         0,
+    //         500.00
+    //     ),
+    //     "Discover It": new Account(
+    //         "Discover It",
+    //         "credit",
+    //         1724.50,
+    //         1750.00
+    //     ),
+    //     "Apple Card": new Account(
+    //         "Apple Card",
+    //         "credit",
+    //         0,
+    //         4000.00
+    //     )
     },
     moneyMoves: [
         new MoneyMove({
@@ -526,3 +526,23 @@ var finances = {
         // })
     ]
 };
+
+const getFinancialDetailsFromServer = async () => {
+    await postTo("/accounts", {})
+    .then(response => {
+        if ( response.status == 200 ) return response.json();
+        console.log(response.status);
+    })
+    .then(json => {
+        json.forEach(account => {
+            let creditLimit = ( account.credit_limit == "" ? null : account.credit_limit )
+            finances.accounts[account.name] = new Account(
+                account.name,
+                account.type,
+                account.balance,
+                creditLimit
+            );
+        });
+    });
+    return;
+}

@@ -32,7 +32,7 @@ class Modal {
         this.#modalContainer.style.transition = "opacity .3s ease";
 
         this.#modalEl.setAttribute("id", "modal-element");
-        this.#modalEl.style.transform = "scale(0.85) rotate(-3deg)";
+        this.#modalEl.style.transform = "scale(0.85)";
         this.#modalEl.style.width = width;
         this.#modalEl.style.height = height;
         this.#modalEl.style.backgroundColor = "white";
@@ -94,7 +94,7 @@ class Modal {
         if ( this.#ready && !this.#isOpen ) {
             this.#modalContainer.style.pointerEvents = "auto";
             this.#modalContainer.style.opacity = "1";
-            this.#modalEl.style.transform = "scale(1) rotate(0deg)";
+            this.#modalEl.style.transform = "scale(1)";
             this.#isOpen = true;
         }
     }
@@ -102,7 +102,7 @@ class Modal {
         if ( this.#ready && this.#isOpen ) {
             this.#modalContainer.style.opacity = "0";
             this.#modalContainer.style.pointerEvents = "none";
-            this.#modalEl.style.transform = "scale(0.85) rotate(-3deg)";
+            this.#modalEl.style.transform = "scale(0.85)";
             setTimeout(() => {
                 this.clear();
                 this.#isOpen = false;
