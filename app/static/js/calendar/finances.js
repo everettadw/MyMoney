@@ -196,11 +196,11 @@ class Account {
     }
 
     processCreditPayment(amount, principleAmount = null, tense = 1) {
-        if ( this.type == "credit" && principleAmount == null ) {
+        if ( this.type == "Credit" && principleAmount == null ) {
             if ( tense > 0 ) this.futureBalance -= amount;
             if ( tense < 0 ) this.pastBalance -= amount;
         }
-        else if ( this.type == "credit" ) {
+        else if ( this.type == "Credit" ) {
             if ( tense > 0 ) this.futureBalance -= principleAmount;
             if ( tense < 0 ) this.pastBalance -= principleAmount;
         }
@@ -215,10 +215,10 @@ class Account {
         if ( accountToCredit != null && accountToCredit != undefined ) {
             accountToCredit.processCreditPayment(amount, principleAmount, tense);
         }
-        if ( this.type == "credit" ) {
+        if ( this.type == "Credit" ) {
             if ( tense > 0 ) this.futureBalance += amount;
             if ( tense < 0 ) this.pastBalance += amount;
-        } else if ( this.type == "debit" ) {
+        } else if ( this.type == "Debit" ) {
             if ( tense > 0 ) this.futureBalance -= amount;
             if ( tense < 0 ) this.pastBalance -= amount;
         }
